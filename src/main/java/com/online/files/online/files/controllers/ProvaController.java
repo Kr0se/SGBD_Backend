@@ -1,5 +1,6 @@
 package com.online.files.online.files.controllers;
 
+import com.online.files.online.files.services.ProvaCustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,12 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.online.files.online.files.models.ProvaCustomer;
 import com.online.files.online.files.repositories.ProvaCustomerRepository;
 
+import java.util.Collection;
+
 @RestController
 public class ProvaController {
 
     @Autowired
     private ProvaCustomerRepository customerRepo;
 
+    @Autowired
+    ProvaCustomerService customerService;
 
     @GetMapping("/prova")
     public ResponseEntity<String> getProva() {
@@ -44,6 +49,11 @@ public class ProvaController {
     }
 
         return new ResponseEntity<>("Funciona!", HttpStatus.OK);
+    }
+
+    @GetMapping("/customers")
+    public Collection<ProvaCustomer> getCustomers(){
+        return customerService.getCustormers();
     }
 }
     

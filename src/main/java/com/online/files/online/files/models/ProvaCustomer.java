@@ -1,7 +1,8 @@
 package com.online.files.online.files.models;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-
+@Document(collection = "provaCustomer")
 public class ProvaCustomer {
 
   @Id

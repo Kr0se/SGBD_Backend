@@ -13,5 +13,6 @@ public interface ProvaCustomerRepository extends MongoRepository<ProvaCustomer, 
 
   public ProvaCustomer findByFirstName(String firstName); //el mongorepository ja detecta que FirstName (nom del metode) es el nom de l'atribut a buscar a la db
   public List<ProvaCustomer> findByLastName(String lastName);
+  public List<ProvaCustomer> findAll();
 
 }
