@@ -1,9 +1,12 @@
 package com.online.files.online.files.models;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "provaCustomer")
-public class ProvaCustomer {
+import java.util.Collection;
+
+@Document(collection = "users")
+public class User {
 
   @Id
   public String id;
@@ -11,9 +14,12 @@ public class ProvaCustomer {
   public String firstName;
   public String lastName;
 
-  public ProvaCustomer() {}
+  @DBRef
+  Collection<FileText> fileTextList;
 
-  public ProvaCustomer(String firstName, String lastName) {
+  public User() {}
+
+  public User(String firstName, String lastName) {
     this.firstName = firstName;
     this.lastName = lastName;
   }
@@ -25,4 +31,7 @@ public class ProvaCustomer {
         id, firstName, lastName);
   }
 
+  public String getId() {
+    return this.id;
+  }
 }
