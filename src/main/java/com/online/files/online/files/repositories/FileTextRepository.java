@@ -1,8 +1,9 @@
 package com.online.files.online.files.repositories;
 
-import com.online.files.online.files.models.FileText;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
+
+import com.online.files.online.files.models.fitxers.FileText;
 
 import java.util.List;
 

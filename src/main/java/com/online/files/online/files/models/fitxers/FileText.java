@@ -1,4 +1,4 @@
-package com.online.files.online.files.models;
+package com.online.files.online.files.models.fitxers;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -7,10 +7,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class FileText {
 
     @Id
-    public String id;
+    private String id;
 
-    public String title;
-    public String content;
+    private String title;
+    private String content;
 
     public FileText(String title){ this.title=title;}
 

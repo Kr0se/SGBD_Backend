@@ -3,7 +3,8 @@ package com.online.files.online.files.services;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.model.GridFSFile;
-import com.online.files.online.files.models.Video;
+import com.online.files.online.files.models.fitxers.Video;
+
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;

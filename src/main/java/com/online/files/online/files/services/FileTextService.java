@@ -1,6 +1,6 @@
 package com.online.files.online.files.services;
 
-import com.online.files.online.files.models.FileText;
+import com.online.files.online.files.models.fitxers.FileText;
 import com.online.files.online.files.repositories.FileTextRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

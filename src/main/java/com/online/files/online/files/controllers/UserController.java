@@ -16,13 +16,13 @@ import java.util.Collection;
 @RestController
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepo;
+    /*@Autowired
+    private UserRepository userRepo;*/
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
-    @GetMapping("/prova")
+    /*@GetMapping("/prova")
     public ResponseEntity<String> getProva() {
         userRepo.deleteAll();
 
@@ -55,14 +55,44 @@ public class UserController {
     @GetMapping()
     public Collection<User> getUser(){
         return userService.getUsers();
+    }*/
+
+    @PostMapping("/register")
+    public ResponseEntity<Boolean> register(
+                        @RequestParam("username") String username,
+                        @RequestParam("password") String password,
+                        @RequestParam("nom") String nom,
+                        @RequestParam("cognom") String cognom){
+
+        return new ResponseEntity<>(this.userService.register(username, password, nom, cognom),HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public String addUser(@RequestParam("firstName") String firstName,
-                          @RequestParam("lastName") String lastName){
-        String id = userService.addUser(firstName,lastName);
-        return "redirect:/users/" + id;
+    @GetMapping("/login")
+    public ResponseEntity<Boolean> login(
+                        @RequestParam("username") String username,
+                        @RequestParam("password") String password){
+
+        return new ResponseEntity<>(this.userService.login(username, password),HttpStatus.OK);
     }
+
+
+    /**
+     * 
+     * @param username usuari de la base de dades (clau primaria de user)
+     * @param path path on volem inserir la nova carpeta. La carpeta principal
+     *             dels usuaris es diu 'main'. Exemples: 'main', 'main/pelis'
+     * @param folderName nom de la carpeta nova
+     * @return True si s'ha afegit la carpeta al path esperat, false altrament
+     */
+    @PostMapping("/{username}/addFolder")
+    public ResponseEntity<Boolean> addFolder(
+                        @PathVariable("username") String username,
+                        @RequestParam("path") String path,
+                        @RequestParam("folderName") String folderName){
+
+        return new ResponseEntity<>(this.userService.addFolder(username, path, folderName),HttpStatus.OK);
+    }
+
 
 }
     

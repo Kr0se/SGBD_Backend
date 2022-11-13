@@ -1,6 +1,6 @@
 package com.online.files.online.files.services;
 
-import com.online.files.online.files.models.Photo;
+import com.online.files.online.files.models.fitxers.Photo;
 import com.online.files.online.files.repositories.PhotoRepository;
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;

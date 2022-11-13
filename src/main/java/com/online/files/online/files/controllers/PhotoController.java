@@ -1,6 +1,6 @@
 package com.online.files.online.files.controllers;
 
-import com.online.files.online.files.models.Photo;
+import com.online.files.online.files.models.fitxers.Photo;
 import com.online.files.online.files.services.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;

@@ -1,4 +1,4 @@
-package com.online.files.online.files.models;
+package com.online.files.online.files.models.fitxers;
 
 import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;

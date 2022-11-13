@@ -1,6 +1,6 @@
 package com.online.files.online.files.controllers;
 
-import com.online.files.online.files.models.Video;
+import com.online.files.online.files.models.fitxers.Video;
 import com.online.files.online.files.services.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
