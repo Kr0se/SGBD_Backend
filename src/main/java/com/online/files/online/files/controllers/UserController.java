@@ -93,6 +93,23 @@ public class UserController {
         return new ResponseEntity<>(this.userService.addFolder(username, path, folderName),HttpStatus.OK);
     }
 
+    /**
+     * 
+     * @param username usuari de la base de dades (clau primaria de user)
+     * @param path path on volem borrar la carpeta. La carpeta principal
+     *             dels usuaris es diu 'main'. Exemples: 'main', 'main/pelis'
+     * @param folderName nom de la carpeta que volem borrar
+     * @return True si s'ha borrat la carpeta al path esperat, false altrament
+     */
+    @DeleteMapping("/{username}/removeFolder")
+    public ResponseEntity<Boolean> removeFolder(
+                        @PathVariable("username") String username,
+                        @RequestParam("path") String path,
+                        @RequestParam("folderName") String folderName){
+
+        return new ResponseEntity<>(this.userService.removeFolder(username, path, folderName),HttpStatus.OK);
+    }
+
 
 }
     

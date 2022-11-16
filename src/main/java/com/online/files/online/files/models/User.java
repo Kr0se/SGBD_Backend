@@ -38,19 +38,43 @@ public class User {
    * @param folderName
    * @throws Exception
    */
-  public User updateCarpeta(List<String> subCarpetes, String folderName) throws Exception{
+  public User addFolder(List<String> subCarpetes, String folderName) throws Exception{
     Carpeta actual = this.mainCarpeta;
     for(String name : subCarpetes){ //Avançem els nivells de les subcarpetes
         actual = actual.getSubCarpeta(name);
         if(actual == null){ //no ha trobat cap subcarpeta que es digui "name"
-            throw new Exception("No hi ha cap subcarpeta que es digui: " + folderName);
+            throw new Exception("No hi ha cap subcarpeta que es digui: " + name);
         }
     }
 
-    if(actual.nameCarpetaTaken(folderName)){ // mirem que no hi hagi una carpeta amb el mateix nom
+    if(actual.existeixSubcarpeta(folderName)){ // mirem que no hi hagi una carpeta amb el mateix nom
       throw new Exception(folderName + " ja existeix a aquest directori");
     }
     actual.addSubCarpeta(new Carpeta(folderName));
+    
+    return this;
+  }
+
+  /**
+   * Elimina la carpeta anomenada 'folderName' de l'estructura de 'subCarpetes'
+   * @param subCarpetes
+   * @param folderName
+   * @throws Exception
+   */
+  public User removeFolder(List<String> subCarpetes, String folderName) throws Exception{
+    Carpeta actual = this.mainCarpeta;
+    for(String name : subCarpetes){ //Avançem els nivells de les subcarpetes
+        actual = actual.getSubCarpeta(name);
+        if(actual == null){ //no ha trobat cap subcarpeta que es digui "name"
+            throw new Exception("No hi ha cap subcarpeta que es digui: " + name);
+        }
+    }
+
+    if(!actual.existeixSubcarpeta(folderName)){ // si no existeix la carpeta que volem borrar
+      throw new Exception(folderName + " no existeix");
+    }
+
+    actual.deleteCarpeta(folderName);
     
     return this;
   }

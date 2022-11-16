@@ -44,13 +44,36 @@ public class UserService {
             return false;
         }
         List<String> itemsPath = Arrays.asList(path.split("/")); //cada subcarpeta esta separada per un /
-        itemsPath = itemsPath.subList(1, itemsPath.size());
+        itemsPath = itemsPath.subList(1, itemsPath.size()); //s'elimina la main
 
         //Intentem afegir la nova carpeta a l'estructura de l'usuari.
         //Retornem l'usuari amb la nova carpeta posada
         try {
-            u = u.updateCarpeta(itemsPath, folderName);
+            u = u.addFolder(itemsPath, folderName);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+
+        this.userRepository.save(u);
+        return true;
+    }
+
+    public Boolean removeFolder(String username, String path, String folderName) {
+        //Mirem si l'usuari existeix al sistema
+        User u = userRepository.findByUsername(username);
+        if(u == null){
+            return false;
+        }
+        List<String> itemsPath = Arrays.asList(path.split("/")); //cada subcarpeta esta separada per un /
+        itemsPath = itemsPath.subList(1, itemsPath.size()); //s'elimina la main
+
+        //Borrem la carpeta de l'estructura de l'usuari.
+        //Retornem l'usuari amb la nova carpeta borrada
+        try {
+            u = u.removeFolder(itemsPath, folderName);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
 

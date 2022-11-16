@@ -38,7 +38,7 @@ public class Carpeta {
    * Només mira en un nivell
    * @return true si ja hi ha un subcarpeta amb el nom "name". False altrament
    */
-  public Boolean nameCarpetaTaken(String name){
+  public Boolean existeixSubcarpeta(String name){
     for(Carpeta c : this.subCarpetes){
       if(c.getNom().equals(name)) return true;
     }
@@ -56,6 +56,17 @@ public class Carpeta {
       }
     }
     return null;
+  }
+
+  public void deleteCarpeta(String name) {
+    Carpeta objectiu = null;
+    for(Carpeta c : this.subCarpetes){
+      if(c.nom.equals(name)){
+        objectiu = c;
+      }
+    }
+
+    if(objectiu != null) this.subCarpetes.remove(objectiu);
   }
 
   public String getNom() {
