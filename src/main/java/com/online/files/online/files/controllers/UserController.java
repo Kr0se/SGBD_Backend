@@ -53,15 +53,20 @@ public class UserController {
     }
 
     @GetMapping()
-    public Collection<User> getUser(){
+    public Collection<User> getUsers(){
         return userService.getUsers();
     }
 
     @PostMapping("/add")
     public String addUser(@RequestParam("firstName") String firstName,
                           @RequestParam("lastName") String lastName){
-        String id = userService.addUser(firstName,lastName);
-        return "redirect:/users/" + id;
+        User u = userService.createUser(firstName,lastName);
+        return "redirect:/users/" + u.getFirstName();
+    }
+
+    @GetMapping("/get")
+    public User getUser(@RequestParam("firstName") String firstName){
+        return userService.getUser(firstName);
     }
 
 }

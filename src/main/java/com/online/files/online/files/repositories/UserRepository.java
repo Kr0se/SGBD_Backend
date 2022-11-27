@@ -13,6 +13,5 @@ public interface UserRepository extends MongoRepository<User, String> {
 
   public User findByFirstName(String firstName); //el mongorepository ja detecta que FirstName (nom del metode) es el nom de l'atribut a buscar a la db
   public List<User> findByLastName(String lastName);
-  public List<User> findAll();
 
 }
