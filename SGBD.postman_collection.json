@@ -1,0 +1,646 @@
+{
+	"info": {
+		"_postman_id": "846d17e3-daf3-4ca9-a3af-5e6b463c67a7",
+		"name": "SGBD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14527252"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "prova",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/prova",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"prova"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "foto1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUser",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "Joan",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/users/get",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"get"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "foto1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "Bernat",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "lastName",
+									"value": "Hernandez",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "firstName",
+									"value": "Joan",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Cortes",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/users/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"add"
+							],
+							"query": [
+								{
+									"key": "tittle",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FitxerUsuari",
+			"item": [
+				{
+					"name": "addFitxerUsuari",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fitxerID",
+									"value": "637e69134420c408f6db7be6",
+									"description": "fitxer1",
+									"type": "text"
+								},
+								{
+									"key": "fitxerID",
+									"value": "637e69164420c408f6db7be9",
+									"description": "fitxer2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "userID",
+									"value": "637d1985dbd1784bc4a2c872",
+									"description": "Bernat",
+									"type": "text"
+								},
+								{
+									"key": "userID",
+									"value": "637e690d4420c408f6db7be3",
+									"description": "Joan",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/fitxersUsuaris/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fitxersUsuaris",
+								"add"
+							],
+							"query": [
+								{
+									"key": "tittle",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFitxerUsuariByUsuari",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "userID",
+									"value": "637d1985dbd1784bc4a2c872",
+									"description": "Bernat",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "userID",
+									"value": "637e690d4420c408f6db7be3",
+									"description": "Joan",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/fitxersUsuaris/usuari",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fitxersUsuaris",
+								"usuari"
+							],
+							"query": [
+								{
+									"key": "userID",
+									"value": "637d1985dbd1784bc4a2c872",
+									"disabled": true
+								},
+								{
+									"key": "userID",
+									"value": "637e690d4420c408f6db7be3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFitxerUsuariByFitxer",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fitxerID",
+									"value": "637e69134420c408f6db7be6",
+									"description": "fitxer1",
+									"type": "text"
+								},
+								{
+									"key": "fitxerID",
+									"value": "637e69164420c408f6db7be9",
+									"description": "fitxer2",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/fitxersUsuaris/fitxer",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fitxersUsuaris",
+								"fitxer"
+							],
+							"query": [
+								{
+									"key": "fitxerID",
+									"value": "637e69134420c408f6db7be6",
+									"disabled": true
+								},
+								{
+									"key": "fitxerID",
+									"value": "637e69164420c408f6db7be9",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Video",
+			"item": [
+				{
+					"name": "addVideo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "video1.mp4",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/D:/Usuarios/Propietario/Desktop/EPS/4.2/SGBD/Projecte/Bd/video_Trim.mp4"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/videos/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"videos",
+								"add"
+							],
+							"query": [
+								{
+									"key": "tittle",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addVideo2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "foto.png",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/D:/Usuarios/Propietario/Desktop/EPS/4.2/SGBD/Projecte/Bd/foto1.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/videos/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"videos",
+								"add"
+							],
+							"query": [
+								{
+									"key": "tittle",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getVideo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/videos/6375415b4249e10b476d6ec4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"videos",
+								"6375415b4249e10b476d6ec4"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "6362ce6ca0b3c137798b2df1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getVideos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/videos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"videos"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "6362ce6ca0b3c137798b2df1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fitxer",
+			"item": [
+				{
+					"name": "addFitxer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "foto.png",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/D:/Usuarios/Propietario/Desktop/EPS/4.2/SGBD/Projecte/Bd/foto1.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/fitxers/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fitxers",
+								"add"
+							],
+							"query": [
+								{
+									"key": "tittle",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addFitxer2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "fitxer.txt",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/D:/Usuarios/Propietario/Desktop/EPS/4.2/SGBD/Projecte/Bd/fitxer1.txt"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/fitxers/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fitxers",
+								"add"
+							],
+							"query": [
+								{
+									"key": "tittle",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addFitxer3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "fitxer2.txt",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/D:/Usuarios/Propietario/Desktop/EPS/4.2/SGBD/Projecte/Bd/fitxer2.txt"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/fitxers/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fitxers",
+								"add"
+							],
+							"query": [
+								{
+									"key": "tittle",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFitxerBD",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fitxerID",
+									"value": "637e69134420c408f6db7be6",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/fitxers/fitxerBD",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fitxers",
+								"fitxerBD"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "6362ce6ca0b3c137798b2df1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFitxers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/fitxers",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fitxers"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "6362ce6ca0b3c137798b2df1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
