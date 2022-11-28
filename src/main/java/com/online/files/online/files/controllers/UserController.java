@@ -62,10 +62,10 @@ public class UserController {
     public ResponseEntity<Boolean> register(
                         @RequestParam("username") String username,
                         @RequestParam("password") String password,
-                        @RequestParam("nom") String nom,
-                        @RequestParam("cognom") String cognom){
+                        @RequestParam("name") String name,
+                        @RequestParam("surname") String surname){
 
-        return new ResponseEntity<>(this.userService.register(username, password, nom, cognom),HttpStatus.OK);
+        return new ResponseEntity<>(this.userService.register(username, password, name, surname),HttpStatus.OK);
     }
 
     @GetMapping("/login")

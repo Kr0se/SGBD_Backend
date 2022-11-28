@@ -14,8 +14,8 @@ public class User {
   @Id
   private String username;
   private String password;
-  private String nom;
-  private String cognom;
+  private String name;
+  private String surname;
   private Carpeta mainCarpeta;
 
 
@@ -24,11 +24,11 @@ public class User {
 
   public User() {}
 
-  public User(String username, String password, String nom, String cognom) {
+  public User(String username, String password, String name, String surname) {
     this.username = username;
     this.password = password;
-    this.nom = nom;
-    this.cognom = cognom;
+    this.name = name;
+    this.surname = surname;
     this.mainCarpeta = (new Carpeta("main"));
   }
 
@@ -87,12 +87,12 @@ public class User {
     return this.password;
   }
 
-  public String getNom() {
-    return this.nom;
+  public String getName() {
+    return this.name;
   }
 
-  public String getCognom() {
-    return this.cognom;
+  public String getSurname() {
+    return this.surname;
   }
 
   public Carpeta getMainCarpeta() {

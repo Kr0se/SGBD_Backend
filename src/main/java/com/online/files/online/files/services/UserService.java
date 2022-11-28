@@ -20,11 +20,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Boolean register(String username, String password, String nom, String cognom){
+    public Boolean register(String username, String password, String name, String surname){
         if(userRepository.findByUsername(username) != null){
             return false;
         }
-        User user = new User(username, password, nom, cognom);
+        User user = new User(username, password, name, surname);
         userRepository.insert(user);
         return true;
     }
