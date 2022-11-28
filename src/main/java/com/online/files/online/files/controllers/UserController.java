@@ -28,7 +28,11 @@ public class UserController {
     @GetMapping("/get")
     public User getUser(@RequestParam("firstName") String firstName){
         return userService.getUser(firstName);
+    }
 
+    @GetMapping("/getUserByUsername")
+    public User getUserByUsername(@RequestParam("username") String username){
+        return userService.getUserByUsername(username);
     }
 
     @PostMapping("/register")

@@ -36,7 +36,12 @@ public class UserService {
     }
 
     public User getUserByUsername(String username){
-        return userRepository.findByUsername(username);
+        User u = userRepository.findByUsername(username);
+        if(u == null){
+            throw new RuntimeException("No existeix un usuari amb aquest username");
+        }
+
+        return u;
     }
 
 
