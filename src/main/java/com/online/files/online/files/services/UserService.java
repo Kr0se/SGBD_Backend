@@ -1,5 +1,6 @@
 package com.online.files.online.files.services;
 
+import com.online.files.online.files.DTO.UserAuthDTO;
 import com.online.files.online.files.models.Carpeta;
 import com.online.files.online.files.models.User;
 import com.online.files.online.files.repositories.UserRepository;
@@ -20,21 +21,21 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Boolean register(String username, String password, String name, String surname){
-        if(userRepository.findByUsername(username) != null){
+    public Boolean register(UserAuthDTO user){
+        if(userRepository.findByUsername(user.getUsername()) != null){
             return false;
         }
-        User user = new User(username, password, name, surname);
-        userRepository.insert(user);
+        User u = new User(user.getUsername(), user.getPassword(), user.getName(), user.getSurname());
+        userRepository.insert(u);
         return true;
     }
 
-    public Boolean login(String username, String password){
-        User u = userRepository.findByUsername(username);
+    public Boolean login(UserAuthDTO user){
+        User u = userRepository.findByUsername(user.getUsername());
         if(u == null){
             return false;
         }
-        return u.getPassword().equals(password);   
+        return u.getPassword().equals(user.getPassword());   
     }
 
     public Boolean addFolder(String username, String path, String folderName){

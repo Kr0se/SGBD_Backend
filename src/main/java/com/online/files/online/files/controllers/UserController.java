@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.online.files.online.files.DTO.UserAuthDTO;
 import com.online.files.online.files.models.User;
 import com.online.files.online.files.repositories.UserRepository;
 import org.springframework.web.multipart.MultipartFile;
@@ -59,21 +60,15 @@ public class UserController {
     }*/
 
     @PostMapping("/register")
-    public ResponseEntity<Boolean> register(
-                        @RequestParam("username") String username,
-                        @RequestParam("password") String password,
-                        @RequestParam("name") String name,
-                        @RequestParam("surname") String surname){
+    public ResponseEntity<Boolean> register(@RequestBody UserAuthDTO user){
 
-        return new ResponseEntity<>(this.userService.register(username, password, name, surname),HttpStatus.OK);
+        return new ResponseEntity<>(this.userService.register(user),HttpStatus.OK);
     }
 
     @GetMapping("/login")
-    public ResponseEntity<Boolean> login(
-                        @RequestParam("username") String username,
-                        @RequestParam("password") String password){
+    public ResponseEntity<Boolean> login(@RequestBody UserAuthDTO user){
 
-        return new ResponseEntity<>(this.userService.login(username, password),HttpStatus.OK);
+        return new ResponseEntity<>(this.userService.login(user),HttpStatus.OK);
     }
 
 
