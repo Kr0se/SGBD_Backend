@@ -64,7 +64,7 @@ public class UserController {
         return new ResponseEntity<>(this.userService.register(user),HttpStatus.OK);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<Boolean> login(@RequestBody UserAuthDTO user){
 
         return new ResponseEntity<>(this.userService.login(user),HttpStatus.OK);
