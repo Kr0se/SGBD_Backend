@@ -17,46 +17,19 @@ import java.util.Collection;
 @RestController
 public class UserController {
 
-    /*@Autowired
-    private UserRepository userRepo;*/
-
     @Autowired
     private UserService userService;
-
-    /*@GetMapping("/prova")
-    public ResponseEntity<String> getProva() {
-        userRepo.deleteAll();
-
-    // save a couple of customers
-        userRepo.save(new User("Alice", "Smith"));
-        userRepo.save(new User("Bob", "Smith"));
-
-    // fetch all customers
-    System.out.println("Customers found with findAll():");
-    System.out.println("-------------------------------");
-    for (User customer : userRepo.findAll()) {
-      System.out.println(customer);
-    }
-    System.out.println();
-
-    // fetch an individual customer
-    System.out.println("Customer found with findByFirstName('Alice'):");
-    System.out.println("--------------------------------");
-    System.out.println(userRepo.findByFirstName("Alice"));
-
-    System.out.println("Customers found with findByLastName('Smith'):");
-    System.out.println("--------------------------------");
-    for (User customer : userRepo.findByLastName("Smith")) {
-      System.out.println(customer);
-    }
-
-        return new ResponseEntity<>("Funciona!", HttpStatus.OK);
-    }
 
     @GetMapping()
     public Collection<User> getUser(){
         return userService.getUsers();
-    }*/
+    }
+
+    @GetMapping("/get")
+    public User getUser(@RequestParam("firstName") String firstName){
+        return userService.getUser(firstName);
+
+    }
 
     @PostMapping("/register")
     public ResponseEntity<Boolean> register(@RequestBody UserAuthDTO user){
@@ -69,7 +42,6 @@ public class UserController {
 
         return new ResponseEntity<>(this.userService.login(user),HttpStatus.OK);
     }
-
 
     /**
      * 
@@ -105,7 +77,4 @@ public class UserController {
         return new ResponseEntity<>(this.userService.removeFolder(username, path, folderName),HttpStatus.OK);
     }
 
-
 }
-    
-

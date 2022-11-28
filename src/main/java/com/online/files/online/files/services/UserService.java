@@ -2,6 +2,7 @@ package com.online.files.online.files.services;
 
 import com.online.files.online.files.DTO.UserAuthDTO;
 import com.online.files.online.files.models.Carpeta;
+import com.online.files.online.files.models.FitxerUsuari;
 import com.online.files.online.files.models.User;
 import com.online.files.online.files.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -20,6 +22,23 @@ public class UserService {
     public Collection<User> getUsers(){
         return userRepository.findAll();
     }
+
+    public void addFitxerUser(User u, FitxerUsuari fu){
+        u.addFitxerUsuari(fu);
+        userRepository.save(u);
+    }
+
+    public User getUser(String userID){
+        Optional<User> u = userRepository.findById(userID);
+        if (u.isEmpty())
+            throw new RuntimeException("No existeix un usuari amb aquesta id");
+        return u.get();
+    }
+
+    public User getUserByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
+
 
     public Boolean register(UserAuthDTO user){
         if(userRepository.findByUsername(user.getUsername()) != null){

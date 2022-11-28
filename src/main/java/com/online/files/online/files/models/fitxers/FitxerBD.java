@@ -1,17 +1,25 @@
 package com.online.files.online.files.models.fitxers;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.InputStream;
 
 @Document(collection = "videos")
-public class Video {
-    @Id
-    public String id;
-    
+public class FitxerBD {
     private String title;
     private InputStream stream;
+
+    public FitxerBD(){}
+
+    public FitxerBD(String title, InputStream stream){
+        this.title = title;
+        this.stream = stream;
+    }
+
+    public FitxerBD(FitxerBD v){
+        this.title = v.title;
+        this.stream = v.stream;
+    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -27,5 +35,10 @@ public class Video {
 
     public InputStream getStream() {
         return this.stream;
+    }
+
+    @Override
+    public String toString(){
+        return "Fitxer [title= " + title + ", stream= " + stream.toString() + "]";
     }
 }

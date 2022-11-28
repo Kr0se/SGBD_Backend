@@ -1,11 +1,10 @@
 package com.online.files.online.files.models;
+import com.online.files.online.files.models.fitxers.Fitxer;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.online.files.online.files.models.fitxers.FileText;
-import com.online.files.online.files.models.fitxers.Photo;
-import com.online.files.online.files.models.fitxers.Video;
+import com.online.files.online.files.models.fitxers.FitxerBD;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,21 +16,18 @@ public class Carpeta {
   @Id
   private String nom;
   private List<Carpeta> subCarpetes;
-  private List<FileText> fileTexts;
-  private List<Photo> photos;
-  private List<Video> videos;
+  private List<Fitxer> fitxers;
+
 
   @DBRef
-  Collection<FileText> fileTextList;
+  Collection<Fitxer> fitxerList;
 
   public Carpeta() {}
 
   public Carpeta(String nom) {
     this.nom = nom;
     this.subCarpetes = new ArrayList<>();
-    this.fileTexts = new ArrayList<>();
-    this.photos = new ArrayList<>();
-    this.videos = new ArrayList<>();
+    this.fitxers = new ArrayList<>();
   }
 
   /**
@@ -77,15 +73,7 @@ public class Carpeta {
     return this.subCarpetes;
   }
 
-  public List<FileText> getFileTexts() {
-    return fileTexts;
-  }
-
-  public List<Photo> getPhotos() {
-    return photos;
-  }
-
-  public List<Video> getVideos() {
-    return videos;
+  public List<Fitxer> getVideos() {
+    return fitxers;
   }
 }

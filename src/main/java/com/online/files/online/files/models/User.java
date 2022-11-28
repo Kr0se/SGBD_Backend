@@ -3,8 +3,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.online.files.online.files.models.fitxers.FileText;
-
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -12,6 +11,7 @@ import java.util.List;
 public class User {
 
   @Id
+  private String id;
   private String username;
   private String password;
   private String name;
@@ -20,7 +20,8 @@ public class User {
 
 
   @DBRef
-  Collection<FileText> fileTextList;
+  private List<FitxerUsuari> fitxerUsuariList = new ArrayList<>();
+
 
   public User() {}
 
@@ -30,6 +31,16 @@ public class User {
     this.name = name;
     this.surname = surname;
     this.mainCarpeta = (new Carpeta("main"));
+  }
+
+  public User(User u){
+    this.id = u.id;
+    this.username = u.username;
+    this.password = u.password;
+    this.name = u.name;
+    this.surname = u.surname;
+    this.mainCarpeta = u.mainCarpeta;
+    this.fitxerUsuariList = u.fitxerUsuariList;
   }
 
   /**
@@ -97,5 +108,14 @@ public class User {
 
   public Carpeta getMainCarpeta() {
     return this.mainCarpeta;
+  }
+
+  public void addFitxerUsuari(FitxerUsuari fu){
+    fitxerUsuariList.add(fu);
+  }
+
+  @Override
+  public String toString(){
+    return "User [id= " + id + ", username= " + username + ", name= " + name + ", filesText: " + fitxerUsuariList.toString() + "]";
   }
 }
