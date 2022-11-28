@@ -1,6 +1,6 @@
 package com.online.files.online.files.services;
 
-import com.online.files.online.files.models.Fitxer;
+import com.online.files.online.files.models.fitxers.Fitxer;
 import com.online.files.online.files.models.FitxerUsuari;
 import com.online.files.online.files.repositories.FitxerRepository;
 import org.springframework.beans.factory.annotation.Autowired;

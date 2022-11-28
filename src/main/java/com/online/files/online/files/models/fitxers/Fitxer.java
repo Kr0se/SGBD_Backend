@@ -1,4 +1,5 @@
-package com.online.files.online.files.models;
+package com.online.files.online.files.models.fitxers;
+import com.online.files.online.files.models.FitxerUsuari;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;

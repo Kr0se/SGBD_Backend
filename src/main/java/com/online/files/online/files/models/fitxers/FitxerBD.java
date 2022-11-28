@@ -1,4 +1,4 @@
-package com.online.files.online.files.models;
+package com.online.files.online.files.models.fitxers;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 

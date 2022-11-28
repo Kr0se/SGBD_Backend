@@ -1,6 +1,6 @@
 package com.online.files.online.files.controllers;
 
-import com.online.files.online.files.models.FitxerBD;
+import com.online.files.online.files.models.fitxers.FitxerBD;
 import com.online.files.online.files.services.FitxerBDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;

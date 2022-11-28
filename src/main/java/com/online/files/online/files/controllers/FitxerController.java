@@ -1,7 +1,7 @@
 package com.online.files.online.files.controllers;
 
-import com.online.files.online.files.models.Fitxer;
-import com.online.files.online.files.models.FitxerBD;
+import com.online.files.online.files.models.fitxers.Fitxer;
+import com.online.files.online.files.models.fitxers.FitxerBD;
 import com.online.files.online.files.repositories.FitxerRepository;
 import com.online.files.online.files.services.FitxerService;
 import com.online.files.online.files.services.FitxerBDService;

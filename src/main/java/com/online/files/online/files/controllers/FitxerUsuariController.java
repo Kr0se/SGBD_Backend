@@ -1,6 +1,6 @@
 package com.online.files.online.files.controllers;
 
-import com.online.files.online.files.models.Fitxer;
+import com.online.files.online.files.models.fitxers.Fitxer;
 import com.online.files.online.files.models.FitxerUsuari;
 import com.online.files.online.files.models.User;
 import com.online.files.online.files.services.FitxerService;
