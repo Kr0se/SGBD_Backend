@@ -1,5 +1,6 @@
 package com.online.files.online.files.services;
 
+import com.online.files.online.files.DTO.FolderDTO;
 import com.online.files.online.files.DTO.UserAuthDTO;
 import com.online.files.online.files.models.Carpeta;
 import com.online.files.online.files.models.FitxerUsuari;
@@ -62,47 +63,47 @@ public class UserService {
         return u.getPassword().equals(user.getPassword());   
     }
 
-    public Boolean addFolder(String username, String path, String folderName){
+    public User addFolder(String username, FolderDTO folder){
         //Mirem si l'usuari existeix al sistema
         User u = userRepository.findByUsername(username);
         if(u == null){
-            return false;
+            throw new RuntimeException("No existeix un usuari amb aquest username");
         }
-        List<String> itemsPath = Arrays.asList(path.split("/")); //cada subcarpeta esta separada per un /
+        List<String> itemsPath = Arrays.asList(folder.getPath().split("/")); //cada subcarpeta esta separada per un /
         itemsPath = itemsPath.subList(1, itemsPath.size()); //s'elimina la main
 
         //Intentem afegir la nova carpeta a l'estructura de l'usuari.
         //Retornem l'usuari amb la nova carpeta posada
         try {
-            u = u.addFolder(itemsPath, folderName);
+            u = u.addFolder(itemsPath, folder.getFolderName());
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return false;
+            return u;
         }
 
         this.userRepository.save(u);
-        return true;
+        return u;
     }
 
-    public Boolean removeFolder(String username, String path, String folderName) {
+    public User removeFolder(String username, FolderDTO folder) {
         //Mirem si l'usuari existeix al sistema
         User u = userRepository.findByUsername(username);
         if(u == null){
-            return false;
+            throw new RuntimeException("No existeix un usuari amb aquest username");
         }
-        List<String> itemsPath = Arrays.asList(path.split("/")); //cada subcarpeta esta separada per un /
+        List<String> itemsPath = Arrays.asList(folder.getPath().split("/")); //cada subcarpeta esta separada per un /
         itemsPath = itemsPath.subList(1, itemsPath.size()); //s'elimina la main
 
         //Borrem la carpeta de l'estructura de l'usuari.
         //Retornem l'usuari amb la nova carpeta borrada
         try {
-            u = u.removeFolder(itemsPath, folderName);
+            u = u.removeFolder(itemsPath, folder.getFolderName());
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return false;
+            return u;
         }
 
         this.userRepository.save(u);
-        return true;
+        return u;
     }
 }
