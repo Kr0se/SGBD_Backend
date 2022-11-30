@@ -114,6 +114,10 @@ public class User {
     fitxerUsuariList.add(fu);
   }
 
+  public void removeFitxerUsuari(FitxerUsuari fu){
+    fitxerUsuariList.remove(fu);
+  }
+
   @Override
   public String toString(){
     return "User [id= " + id + ", username= " + username + ", name= " + name + ", filesText: " + fitxerUsuariList.toString() + "]";

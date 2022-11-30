@@ -20,28 +20,28 @@ public class FitxerBDController {
     FitxerBDService fitxerBDService;
 
     @PostMapping("/add")
-    public String addVideo(@RequestParam("title") String title,
+    public String addFitxerBD(@RequestParam("title") String title,@RequestParam("type") String tipus,
                            @RequestParam("file") MultipartFile file, Model model) throws IOException {
-        String id = fitxerBDService.createVideo(title, file);
+        String id = fitxerBDService.createFitxerBD(title,tipus, file);
         return "redirect:/videos/" + id;
     }
 
     @GetMapping("/{id}")
-    public String getVideo(@PathVariable String id, Model model) throws Exception {
-        FitxerBD fitxerBD = fitxerBDService.getVideo(id);
+    public String getFitxerBD(@PathVariable String id, Model model) throws Exception {
+        FitxerBD fitxerBD = fitxerBDService.getFitxerBD(id);
         model.addAttribute("title", fitxerBD.getTitle());
         model.addAttribute("url", "/videos/stream/" + id);
         return "videos";
     }
 
     @GetMapping("/stream/{id}")
-    public void streamVideo(@PathVariable String id, HttpServletResponse response) throws Exception {
-        FitxerBD fitxerBD = fitxerBDService.getVideo(id);
+    public void streamFitxerBD(@PathVariable String id, HttpServletResponse response) throws Exception {
+        FitxerBD fitxerBD = fitxerBDService.getFitxerBD(id);
         FileCopyUtils.copy(fitxerBD.getStream(), response.getOutputStream());
     }
 
     @GetMapping()
-    public Collection<FitxerBD> getVideos() throws IOException {
-        return fitxerBDService.getVideos();
+    public Collection<FitxerBD> getFitxersBD() throws IOException {
+        return fitxerBDService.getFitxersBD();
     }
 }

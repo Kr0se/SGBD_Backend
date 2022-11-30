@@ -16,8 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.function.Consumer;
 
 @Service
@@ -29,16 +30,16 @@ public class FitxerBDService {
     @Autowired
     private GridFsOperations operations;
 
-    public String createVideo(String title, MultipartFile file) throws IOException {
+    public String createFitxerBD(String title,String tipus, MultipartFile file) throws IOException {
         DBObject metaData = new BasicDBObject();
-        metaData.put("type", "video");
+        metaData.put("type", tipus);
         metaData.put("title", title);
         ObjectId id = gridFsTemplate.store(
                 file.getInputStream(), file.getName(), file.getContentType(), metaData);
         return id.toString();
     }
 
-    public FitxerBD getVideo(String id) throws IllegalStateException, IOException {
+    public FitxerBD getFitxerBD(String id) throws IllegalStateException, IOException {
         GridFSFile file = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
         FitxerBD fitxerBD = new FitxerBD();
         fitxerBD.setTitle(file.getMetadata().get("title").toString());
@@ -46,7 +47,7 @@ public class FitxerBDService {
         return fitxerBD;
     }
 
-    public Collection<FitxerBD> getVideos() throws IllegalStateException, IOException{
+    public Collection<FitxerBD> getFitxersBD() throws IllegalStateException, IOException{
         GridFSFindIterable files = gridFsTemplate.find(new Query());
         Collection<FitxerBD> fitxerBDS = new ArrayList<>();
         files.forEach((Consumer<? super GridFSFile>) d -> {
@@ -56,7 +57,18 @@ public class FitxerBDService {
                 e.printStackTrace();
             }
         });
-
         return fitxerBDS;
+    }
+
+    public Date getUploadDate(String id)throws IllegalStateException, IOException {
+        GridFSFile file = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
+        /*DateFormat df = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
+        df.setTimeZone(TimeZone.getTimeZone("GMT"));
+        return df.format(file.getUploadDate());*/
+        return file.getUploadDate();
+    }
+
+    public void deleteFitxerBD(String id){
+        gridFsTemplate.delete(new Query(Criteria.where("_id").is(id)));
     }
 }

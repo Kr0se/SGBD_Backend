@@ -26,9 +26,9 @@ public class FitxerUsuariController {
     FitxerService fitxerService;
 
     @PostMapping(path = "/add")
-    public String afegirRelacio(@RequestParam("fitxerID") String fitxerID, @RequestParam("userID") String userID) throws IOException {
+    public String afegirRelacio(@RequestParam("fitxerID") String fitxerID, @RequestParam("userID") String userID, @RequestParam("esPropietari") Boolean esPropietari) throws IOException {
 
-        FitxerUsuari fu = fitxerUsuariService.createFitxerUsuari(fitxerID,userID);
+        FitxerUsuari fu = fitxerUsuariService.createFitxerUsuari(fitxerID,userID, esPropietari);
         Fitxer f = fitxerService.getFitxer(fitxerID);
         User u = userService.getUser(userID);
 

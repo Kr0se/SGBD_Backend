@@ -30,6 +30,11 @@ public class UserController {
         return userService.getUser(firstName);
     }
 
+    @GetMapping("/getString")
+    public String getUserString(@RequestParam("id") String firstName){
+        return userService.getUser(firstName).toString();
+    }
+
     @GetMapping("/getUserByUsername")
     public User getUserByUsername(@RequestParam("username") String username){
         return userService.getUserByUsername(username);

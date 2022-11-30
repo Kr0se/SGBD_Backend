@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -15,12 +16,16 @@ public class FitxerService
     @Autowired
     private FitxerRepository fitxerRepository;
 
+    @Autowired
+    private UserService userService;
 
+    @Autowired
+    private FitxerBDService fitxerBDService;
 
     public Collection<Fitxer> getFitxers(){ return fitxerRepository.findAll();}
 
-    public Fitxer createFitxer(String nom, String idDB){
-        Fitxer f = new Fitxer(nom,idDB);
+    public Fitxer createFitxer(String nom, String tipus, Date data, String idDB){
+        Fitxer f = new Fitxer(nom, tipus, data, idDB);
         fitxerRepository.save(f);
         return f;
     }
@@ -46,5 +51,11 @@ public class FitxerService
 
     public Fitxer getFitxerByNom(String nom){
         return fitxerRepository.findByNom(nom);
+    }
+
+    public void deleteFitxer(String fitxerID){
+        Fitxer f = getFitxer(fitxerID);
+        fitxerBDService.deleteFitxerBD(f.getFitxerDBId());
+        fitxerRepository.delete(f);
     }
 }

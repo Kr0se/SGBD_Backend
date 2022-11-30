@@ -12,25 +12,21 @@ public class FitxerUsuari {
 
     private String fitxerId;
     private String userId;
-
-    //private Fitxer fitxer;
-    //private User user;
+    private Boolean esPropietari;
 
     public FitxerUsuari(){}
 
-    public FitxerUsuari(String fitxerId, String userId){
+    public FitxerUsuari(String fitxerId, String userId, Boolean propietari){
         this.fitxerId = fitxerId;
         this.userId = userId;
-        //this.fitxer = fitxer;
-        //this.user = user;
+        this.esPropietari = propietari;
     }
 
     public FitxerUsuari(FitxerUsuari fu){
         this.id = fu.id;
         this.fitxerId = fu.fitxerId;
         this.userId = fu.userId;
-        //this.fitxer = fu.fitxer;
-        //this.user = fu.user;
+        this.esPropietari = fu.esPropietari;
     }
 
     public String getId() {
@@ -41,8 +37,10 @@ public class FitxerUsuari {
 
     public String getUserId(){ return userId;}
 
+    public Boolean getEsPropietari(){return esPropietari;}
+
     @Override
     public String toString(){
-        return "FitxerUsuari [id= " + id + ", Fitxer= " + fitxerId + ", Usuari= " + userId + "]";
+        return "FitxerUsuari [id= " + id + ", Fitxer= " + fitxerId + ", Usuari= " + userId + ", EsPropietari= " + esPropietari + "]";
     }
 }

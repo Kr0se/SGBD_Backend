@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -17,7 +18,9 @@ public class Fitxer
 
     private String nom;
 
-    //private String tipus;
+    private String tipus;
+
+    private Date dataPujada;
 
     private String fitxerDBId;
 
@@ -26,8 +29,10 @@ public class Fitxer
 
     public Fitxer(){}
 
-    public Fitxer(String nom, String idDB){
+    public Fitxer(String nom, String tipus, Date date, String idDB){
         this.nom = nom;
+        this.tipus = tipus;
+        this.dataPujada = date;
         this.fitxerDBId = idDB;
     }
 
@@ -37,7 +42,10 @@ public class Fitxer
 
     public String getNom(){return this.nom;}
 
+    public Date getDataPujada(){return this.dataPujada;}
+
     public String getFitxerDBId(){return this.fitxerDBId;}
+
 
     public void addFitxerUsuari(FitxerUsuari fu){
         fitxerUsuariList.add(fu);

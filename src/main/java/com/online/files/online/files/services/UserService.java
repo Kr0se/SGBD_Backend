@@ -105,4 +105,11 @@ public class UserService {
         this.userRepository.save(u);
         return true;
     }
+
+    public void deleteFitxerUsuari(FitxerUsuari fu){
+        User u = getUser(fu.getUserId());
+        u.removeFitxerUsuari(fu);
+        u.toString();
+        userRepository.save(u);
+    }
 }
