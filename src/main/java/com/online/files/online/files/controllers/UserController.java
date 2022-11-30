@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.online.files.online.files.DTO.FolderDTO;
 import com.online.files.online.files.DTO.UserAuthDTO;
 import com.online.files.online.files.models.User;
 import com.online.files.online.files.repositories.UserRepository;
@@ -61,12 +62,9 @@ public class UserController {
      * @return True si s'ha afegit la carpeta al path esperat, false altrament
      */
     @PostMapping("/{username}/addFolder")
-    public ResponseEntity<Boolean> addFolder(
-                        @PathVariable("username") String username,
-                        @RequestParam("path") String path,
-                        @RequestParam("folderName") String folderName){
+    public ResponseEntity<User> addFolder(@PathVariable("username") String username, @RequestBody FolderDTO folder){
 
-        return new ResponseEntity<>(this.userService.addFolder(username, path, folderName),HttpStatus.OK);
+        return new ResponseEntity<>(this.userService.addFolder(username, folder),HttpStatus.OK);
     }
 
     /**
@@ -77,13 +75,10 @@ public class UserController {
      * @param folderName nom de la carpeta que volem borrar
      * @return True si s'ha borrat la carpeta al path esperat, false altrament
      */
-    @DeleteMapping("/{username}/removeFolder")
-    public ResponseEntity<Boolean> removeFolder(
-                        @PathVariable("username") String username,
-                        @RequestParam("path") String path,
-                        @RequestParam("folderName") String folderName){
+    @PostMapping("/{username}/removeFolder")
+    public ResponseEntity<User> removeFolder(@PathVariable("username") String username, @RequestBody FolderDTO folder){
 
-        return new ResponseEntity<>(this.userService.removeFolder(username, path, folderName),HttpStatus.OK);
+        return new ResponseEntity<>(this.userService.removeFolder(username, folder),HttpStatus.OK);
     }
 
 }
