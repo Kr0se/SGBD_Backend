@@ -59,7 +59,7 @@ public class UserController {
      * @param path path on volem inserir la nova carpeta. La carpeta principal
      *             dels usuaris es diu 'main'. Exemples: 'main', 'main/pelis'
      * @param folderName nom de la carpeta nova
-     * @return True si s'ha afegit la carpeta al path esperat, false altrament
+     * @return L'usuari amb l'estructura actualitzada
      */
     @PostMapping("/{username}/addFolder")
     public ResponseEntity<User> addFolder(@PathVariable("username") String username, @RequestBody FolderDTO folder){
@@ -73,12 +73,26 @@ public class UserController {
      * @param path path on volem borrar la carpeta. La carpeta principal
      *             dels usuaris es diu 'main'. Exemples: 'main', 'main/pelis'
      * @param folderName nom de la carpeta que volem borrar
-     * @return True si s'ha borrat la carpeta al path esperat, false altrament
+     * @return L'usuari amb l'estructura actualitzada
      */
     @PostMapping("/{username}/removeFolder")
     public ResponseEntity<User> removeFolder(@PathVariable("username") String username, @RequestBody FolderDTO folder){
 
         return new ResponseEntity<>(this.userService.removeFolder(username, folder),HttpStatus.OK);
+    }
+
+    /**
+     * 
+     * @param username usuari de la base de dades (clau primaria de user)
+     * @param path path on volem borrar la carpeta. La carpeta principal
+     *             dels usuaris es diu 'main'. Exemples: 'main', 'main/pelis'
+     * @param folderName nom de la carpeta que volem canviar el nopm
+     * @return L'usuari amb l'estructura actualitzada
+     */
+    @PostMapping("/{username}/renameFolder")
+    public ResponseEntity<User> renameFolder(@PathVariable("username") String username, @RequestBody FolderDTO folder){
+
+        return new ResponseEntity<>(this.userService.renameFolder(username, folder),HttpStatus.OK);
     }
 
 }
