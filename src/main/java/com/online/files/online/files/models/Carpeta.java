@@ -57,6 +57,26 @@ public class Carpeta {
     if(objectiu != null) this.subCarpetes.remove(objectiu);
   }
 
+  public void renameCarpeta(String name, String newFolderName) {
+    Carpeta objectiu = null;
+    int i = 0;
+    for(Carpeta c : this.subCarpetes){
+      if(c.nom.equals(name)){
+        objectiu = c;
+        break;
+      }
+      i++;
+    }
+
+    if(objectiu != null){
+      /*this.subCarpetes.remove(objectiu);
+      objectiu.nom = newFolderName;
+      this.subCarpetes.add(objectiu);*/
+
+      this.subCarpetes.get(i).nom = newFolderName;
+    }
+  }
+
   public String getNom() {
     return this.nom;
   }

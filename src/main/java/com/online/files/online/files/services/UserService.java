@@ -3,7 +3,6 @@ package com.online.files.online.files.services;
 import com.online.files.online.files.DTO.FileFolderDTO;
 import com.online.files.online.files.DTO.FolderDTO;
 import com.online.files.online.files.DTO.UserAuthDTO;
-import com.online.files.online.files.models.Carpeta;
 import com.online.files.online.files.models.FitxerUsuari;
 import com.online.files.online.files.models.User;
 import com.online.files.online.files.models.fitxers.Fitxer;
@@ -118,6 +117,27 @@ public class UserService {
         u.removeFitxerUsuari(fu);
         u.toString();
         userRepository.save(u);
+    }
+
+    public User renameFolder(String username, FolderDTO folder) {
+        //Mirem si l'usuari existeix al sistema
+        User u = userRepository.findByUsername(username);
+        if(u == null){
+            throw new RuntimeException("No existeix un usuari amb aquest username");
+        }
+        List<String> itemsPath = Arrays.asList(folder.getPath().split("/")); //cada subcarpeta esta separada per un /
+        itemsPath = itemsPath.subList(1, itemsPath.size()); //s'elimina la main
+        //Actualitzem el nom de la carpeta a l'estructura de l'usuari.
+        //Retornem l'usuari amb l'estructura actualitzada
+        try {
+            u = u.renameFolder(itemsPath, folder.getFolderName(), folder.getNewFolderName());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return u;
+        }
+
+        this.userRepository.save(u);
+        return u;
     }
 
     public List<Fitxer> getFiles(String username, FolderDTO folder){

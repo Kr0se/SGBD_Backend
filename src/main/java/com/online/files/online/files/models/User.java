@@ -95,10 +95,35 @@ public class User {
   }
 
   /**
-   * Retorna els fitxer d'una carpeta de l'usuari
+   * Canvia el nom de la carpeta 'folderName' --> 'newFolderName' dins el path de 'subCarpetes'
    * @param subCarpetes
+   * @param folderName
+   * @param newFolderName
    * @throws Exception
    */
+  public User renameFolder(List<String> subCarpetes, String folderName, String newFolderName) throws Exception{
+    Carpeta actual = this.mainCarpeta;
+    for(String name : subCarpetes){ //Avançem els nivells de les subcarpetes
+        actual = actual.getSubCarpeta(name);
+        if(actual == null){ //no ha trobat cap subcarpeta que es digui "name"
+            throw new Exception("No hi ha cap subcarpeta que es digui: " + name);
+        }
+    }
+    
+    if(!actual.existeixSubcarpeta(folderName)){ // si no existeix la carpeta que volem canviar el nom
+      throw new Exception(folderName + " no existeix");
+    }
+
+    actual.renameCarpeta(folderName, newFolderName);
+    return this;
+  }
+    
+    
+  /**
+  * Retorna els fitxer d'una carpeta de l'usuari
+  * @param subCarpetes
+  * @throws Exception
+  */
   public List<Fitxer> getFiles(List<String> subCarpetes) throws Exception{
     Carpeta actual = this.mainCarpeta;
     for(String name : subCarpetes){ //Avançem els nivells de les subcarpetes
