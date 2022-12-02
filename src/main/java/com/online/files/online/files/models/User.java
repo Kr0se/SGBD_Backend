@@ -4,8 +4,9 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.online.files.online.files.models.fitxers.Fitxer;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Document(collection = "users")
@@ -25,7 +26,6 @@ public class User {
 
   @DBRef
   private List<FitxerUsuari> fitxerUsuariList = new ArrayList<>();
-
 
   public User() {}
 
@@ -91,6 +91,70 @@ public class User {
 
     actual.deleteCarpeta(folderName);
     
+    return this;
+  }
+
+  /**
+   * Retorna els fitxer d'una carpeta de l'usuari
+   * @param subCarpetes
+   * @throws Exception
+   */
+  public List<Fitxer> getFiles(List<String> subCarpetes) throws Exception{
+    Carpeta actual = this.mainCarpeta;
+    for(String name : subCarpetes){ //Avançem els nivells de les subcarpetes
+        actual = actual.getSubCarpeta(name);
+        if(actual == null){ //no ha trobat cap subcarpeta que es digui "name"
+            throw new Exception("No hi ha cap subcarpeta que es digui: " + name);
+        }
+    }  
+    return actual.getFiles();
+  }
+
+  /**
+   * Afageix un fitxer a una carpeta de l'usuari
+   * @param subCarpetes
+   * @param f
+   * @throws Exception
+   */
+  public User addFile(List<String> subCarpetes, Fitxer f) throws Exception{
+    Carpeta actual = this.mainCarpeta;
+    for(String name : subCarpetes){ //Avançem els nivells de les subcarpetes
+        actual = actual.getSubCarpeta(name);
+        if(actual == null){ //no ha trobat cap subcarpeta que es digui "name"
+            throw new Exception("No hi ha cap subcarpeta que es digui: " + name);
+        }
+    }
+
+    //Mirem si la carpeta conte aquest fitxer
+    if(actual.existFiles(f.getId())){
+      throw new Exception("La carpeta ja conte aquest fitxer");
+    }
+
+    actual.addFile(f);
+    return this;
+  }
+
+  /**
+   * Borra un fitxer de una carpeta de l'usuari
+   * @param subCarpetes
+   * @param f
+   * @throws Exception
+   */
+  public User removeFile(List<String> subCarpetes, Fitxer f) throws Exception{
+    Carpeta actual = this.mainCarpeta;
+    for(String name : subCarpetes){ //Avançem els nivells de les subcarpetes
+        actual = actual.getSubCarpeta(name);
+        if(actual == null){ //no ha trobat cap subcarpeta que es digui "name"
+            throw new Exception("No hi ha cap subcarpeta que es digui: " + name);
+        }
+    }
+
+    //Mirem si la carpeta conte el fitxer
+    if(!actual.existFiles(f.getId())){
+      throw new Exception("La carpeta no conte el fitxer");
+    }
+    
+    actual.removeFile(f.getId());
     return this;
   }
 

@@ -1,13 +1,9 @@
 package com.online.files.online.files.models;
 import com.online.files.online.files.models.fitxers.Fitxer;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.online.files.online.files.models.fitxers.FitxerBD;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Document(collection = "carpetes")
@@ -17,10 +13,6 @@ public class Carpeta {
   private String nom;
   private List<Carpeta> subCarpetes;
   private List<Fitxer> fitxers;
-
-
-  @DBRef
-  Collection<Fitxer> fitxerList;
 
   public Carpeta() {}
 
@@ -75,5 +67,32 @@ public class Carpeta {
 
   public List<Fitxer> getVideos() {
     return fitxers;
+  }
+
+  public List<Fitxer> getFiles() {
+    return fitxers;
+  }
+
+  public boolean existFiles(String fID) {
+    for (Fitxer fitxer : fitxers) {
+      if (fitxer.getId().equals(fID))
+        return true;
+    }
+    return false;
+  }
+
+  public Carpeta addFile(Fitxer f){
+    fitxers.add(f);
+    return this;
+  }
+
+  public Carpeta removeFile(String fID){
+    for (Fitxer fitxer : fitxers) {
+      if (fitxer.getId().equals(fID)){
+        fitxers.remove(fitxer);
+        return this;
+      }
+    }
+    return this;
   }
 }

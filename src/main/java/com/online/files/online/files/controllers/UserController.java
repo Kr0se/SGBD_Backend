@@ -6,13 +6,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.online.files.online.files.DTO.FileFolderDTO;
 import com.online.files.online.files.DTO.FolderDTO;
 import com.online.files.online.files.DTO.UserAuthDTO;
 import com.online.files.online.files.models.User;
-import com.online.files.online.files.repositories.UserRepository;
-import org.springframework.web.multipart.MultipartFile;
+import com.online.files.online.files.models.fitxers.Fitxer;
 
 import java.util.Collection;
+import java.util.List;
 
 @RequestMapping(path="/users")
 @RestController
@@ -79,6 +80,41 @@ public class UserController {
     public ResponseEntity<User> removeFolder(@PathVariable("username") String username, @RequestBody FolderDTO folder){
 
         return new ResponseEntity<>(this.userService.removeFolder(username, folder),HttpStatus.OK);
+    }
+
+    @GetMapping("/{username}/carpeta/getFiles")
+    public List<Fitxer> getFiles(@PathVariable("username") String username, @RequestBody FolderDTO folder){
+        return userService.getFiles(username, folder);
+    }
+
+    /**
+     * @param username usuari de la base de dades (clau primaria de user)
+     * @param fitxerID id del fitxer
+     * @param path path de la carpeta on volem inserir el fitxer. La carpeta principal
+     *             dels usuaris es diu 'main'. Exemples: 'main', 'main/pelis'
+     * @return True si s'ha afegit el fitxer a la carpeta
+     */
+    @PostMapping("/{username}/carpeta/addFile")
+    public ResponseEntity<Boolean> addFile(
+                            @PathVariable("username") String username,
+                            @RequestBody FileFolderDTO fileFolder){
+
+        return new ResponseEntity<>(this.userService.addFile(username, fileFolder),HttpStatus.OK);
+    }
+
+     /**
+     * @param username usuari de la base de dades (clau primaria de user)
+     * @param fitxerID id del fitxer
+     * @param path path de la carpeta d'on volem borrar el fitxer. La carpeta principal
+     *             dels usuaris es diu 'main'. Exemples: 'main', 'main/pelis'
+     * @return True si s'ha borrat el fitxer de la carpeta
+     */
+    @DeleteMapping("/{username}/carpeta/removeFile")
+    public ResponseEntity<Boolean> removeFile(
+                            @PathVariable("username") String username,
+                            @RequestBody FileFolderDTO fileFolder){
+
+        return new ResponseEntity<>(this.userService.removeFile(username, fileFolder),HttpStatus.OK);
     }
 
 }
