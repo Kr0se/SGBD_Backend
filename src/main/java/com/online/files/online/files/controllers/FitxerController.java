@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
@@ -53,7 +54,7 @@ public class FitxerController
 
     }
 
-    @GetMapping("/data")
+    @GetMapping("/dataPujada")
     public Date getUploadData(@RequestParam("fitxerID") String fitxerId) throws IOException {
 
         String fitxerDBId = fitxerService.getFitxerBD(fitxerId);
@@ -73,6 +74,32 @@ public class FitxerController
         fitxerUsuariService.deleteFitxerUsuariOfUser(fus);
         fitxerService.deleteFitxer(fitxerId);
         return "Fitxer amb ID: " + fitxerId + " s'ha esborrat correctament";
+    }
+
+    @GetMapping("/tipus")
+    public Collection<Fitxer> getFitxerByTipus(@RequestParam("tipus") String tipus) {
+        return fitxerService.getFitxerByTipus(tipus);
+    }
+
+    @GetMapping("/data")
+    public Collection<Fitxer> getFitxerByData(@RequestParam("data") Date data) {
+
+        return fitxerService.getFitxerByDataPujada(data);
+    }
+    @GetMapping("/databetween")
+    public Collection<Fitxer> getFitxerBetweenData(@RequestParam("data1") Date data1, @RequestParam("data1") Date data2) {
+
+        return fitxerService.getFitxerByDataPujadaBetween(data1,data2);
+    }
+    @GetMapping("/nomstarts")
+    public Collection<Fitxer> getFitxerByNomStarts(@RequestParam("nom") String nom) {
+
+        return fitxerService.getFitxerByNomStartsWith(nom);
+    }
+    @GetMapping("/nomends")
+    public Collection<Fitxer> getFitxerByNomEnds(@RequestParam("nom") String nom) {
+
+        return fitxerService.getFitxerByNomEndsWith(nom);
     }
 
 }

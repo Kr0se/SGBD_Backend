@@ -58,4 +58,24 @@ public class FitxerService
         fitxerBDService.deleteFitxerBD(f.getFitxerDBId());
         fitxerRepository.delete(f);
     }
+
+    public Collection<Fitxer> getFitxerByTipus(String tipus){
+        return fitxerRepository.findByTipus(tipus);
+    }
+
+    public Collection<Fitxer> getFitxerByDataPujada(Date data){
+        return fitxerRepository.findByDataPujada(data);
+    }
+
+    public Collection<Fitxer> getFitxerByDataPujadaBetween(Date data1, Date data2){
+        return fitxerRepository.findByDataPujadaBetween(data1, data2);
+    }
+
+    public Collection<Fitxer> getFitxerByNomStartsWith(String nom){
+        return fitxerRepository.findByNomStartingWith(nom);
+    }
+
+    public Collection<Fitxer> getFitxerByNomEndsWith(String nom){
+        return fitxerRepository.findByNomEndingWith(nom);
+    }
 }
