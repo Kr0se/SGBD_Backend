@@ -1,5 +1,6 @@
 package com.online.files.online.files.services;
 
+import com.online.files.online.files.DTO.FitxerDTO;
 import com.online.files.online.files.models.fitxers.Fitxer;
 import com.online.files.online.files.models.FitxerUsuari;
 import com.online.files.online.files.repositories.FitxerRepository;
@@ -42,8 +43,15 @@ public class FitxerService
         return f.get();
     }
 
-    public String getFitxerBD(String fitxerID){
-        Optional<Fitxer> f = fitxerRepository.findById(fitxerID);
+    public String getFitxerBD(FitxerDTO fitxer){
+        Optional<Fitxer> f = fitxerRepository.findById(fitxer.getId());
+        if (f.isEmpty())
+            throw new RuntimeException("No existeix un fitxer amb aquesta id");
+        return f.get().getFitxerDBId();
+    }
+
+    public String getFitxerBD(String fitxerId){
+        Optional<Fitxer> f = fitxerRepository.findById(fitxerId);
         if (f.isEmpty())
             throw new RuntimeException("No existeix un fitxer amb aquesta id");
         return f.get().getFitxerDBId();

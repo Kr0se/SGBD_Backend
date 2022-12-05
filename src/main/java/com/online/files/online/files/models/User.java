@@ -183,6 +183,8 @@ public class User {
     return this;
   }
 
+  public String getId(){ return this.id;}
+
   public String getUsername() {
     return this.username;
   }

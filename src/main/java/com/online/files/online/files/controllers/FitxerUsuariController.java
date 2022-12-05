@@ -1,8 +1,11 @@
 package com.online.files.online.files.controllers;
 
+import com.online.files.online.files.DTO.UserAuthDTO;
 import com.online.files.online.files.models.fitxers.Fitxer;
 import com.online.files.online.files.models.FitxerUsuari;
 import com.online.files.online.files.models.User;
+import com.online.files.online.files.models.fitxers.FitxerBD;
+import com.online.files.online.files.services.FitxerBDService;
 import com.online.files.online.files.services.FitxerService;
 import com.online.files.online.files.services.FitxerUsuariService;
 import com.online.files.online.files.services.UserService;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @RequestMapping(path = "/fitxersUsuaris")
@@ -24,6 +28,9 @@ public class FitxerUsuariController {
 
     @Autowired
     FitxerService fitxerService;
+
+    @Autowired
+    FitxerBDService fitxerBDService;
 
     @PostMapping(path = "/add")
     public String afegirRelacio(@RequestParam("fitxerID") String fitxerID, @RequestParam("userID") String userID, @RequestParam("esPropietari") Boolean esPropietari) throws IOException {
@@ -42,8 +49,14 @@ public class FitxerUsuariController {
     public Collection<FitxerUsuari> getFitxersUsuaris(){ return fitxerUsuariService.getFitxersUsuaris();}
 
     @GetMapping("/usuari")
-    public Collection<FitxerUsuari> getFitxersUsuarisByUsuari(@RequestParam("userID") String userID){
-        return fitxerUsuariService.getListFitxerUsuariByUsuari(userID);
+    public Collection<FitxerBD> getFitxersUsuarisByUsuari(@RequestBody UserAuthDTO user) throws IOException {
+        Collection<FitxerBD> toReturn = new ArrayList<>();
+        Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(user);
+        for(FitxerUsuari fu:fus){
+            String id = fitxerService.getFitxerBD(fu.getFitxerId());
+            toReturn.add(fitxerBDService.getFitxerBD(id));
+        }
+        return toReturn;
     }
 
     @GetMapping("/fitxer")

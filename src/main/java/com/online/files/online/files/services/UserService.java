@@ -41,6 +41,14 @@ public class UserService {
         return u.get();
     }
 
+    public User getUserByUserName(String username){
+        User u = userRepository.findByUsername(username);
+        if(u == null){
+            throw new RuntimeException("No existeix un usuari amb aquest username");
+        }
+        return u;
+    }
+
     public User getUserByUsername(String username){
         User u = userRepository.findByUsername(username);
         if(u == null){

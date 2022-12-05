@@ -1,5 +1,6 @@
 package com.online.files.online.files.services;
 
+import com.online.files.online.files.DTO.UserAuthDTO;
 import com.online.files.online.files.models.FitxerUsuari;
 import com.online.files.online.files.models.User;
 import com.online.files.online.files.repositories.FitxerUsuariRepository;
@@ -28,8 +29,10 @@ public class FitxerUsuariService {
         return fu;
     }
 
-    public Collection<FitxerUsuari> getListFitxerUsuariByUsuari(String usuariId){
-        Optional<Collection<FitxerUsuari>> listFU = fitxerUsuariRepository.findByuserId(usuariId);
+    public Collection<FitxerUsuari> getListFitxerUsuariByUsuari(UserAuthDTO user){
+
+        User user1 = userService.getUserByUserName(user.getUsername());
+        Optional<Collection<FitxerUsuari>> listFU = fitxerUsuariRepository.findByuserId(user1.getId());
         if (listFU.isEmpty())
             throw new RuntimeException("Aquest usuari no te cap fitxer");
         return listFU.get();
