@@ -39,7 +39,7 @@ public class UserController {
 
     @GetMapping("/getUserByUsername")
     public User getUserByUsername(@RequestParam("username") String username){
-        return userService.getUserByUsername(username);
+        return userService.getUserByUserName(username);
     }
 
     @PostMapping("/register")

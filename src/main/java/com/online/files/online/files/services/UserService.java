@@ -49,16 +49,6 @@ public class UserService {
         return u;
     }
 
-    public User getUserByUsername(String username){
-        User u = userRepository.findByUsername(username);
-        if(u == null){
-            throw new RuntimeException("No existeix un usuari amb aquest username");
-        }
-
-        return u;
-    }
-
-
     public Boolean register(UserAuthDTO user){
         if(userRepository.findByUsername(user.getUsername()) != null){
             return false;
