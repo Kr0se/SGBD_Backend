@@ -10,6 +10,8 @@ import com.online.files.online.files.services.FitxerService;
 import com.online.files.online.files.services.FitxerUsuariService;
 import com.online.files.online.files.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -48,15 +50,15 @@ public class FitxerUsuariController {
     @GetMapping()
     public Collection<FitxerUsuari> getFitxersUsuaris(){ return fitxerUsuariService.getFitxersUsuaris();}
 
-    @GetMapping("/usuari")
-    public Collection<FitxerBD> getFitxersUsuarisByUsuari(@RequestBody UserAuthDTO user) throws IOException {
+    @PostMapping("/usuari")
+    public ResponseEntity<Collection<FitxerBD>> getFitxersUsuarisByUsuari(@RequestBody UserAuthDTO user) throws IOException {
         Collection<FitxerBD> toReturn = new ArrayList<>();
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(user);
         for(FitxerUsuari fu:fus){
             String id = fitxerService.getFitxerBD(fu.getFitxerId());
             toReturn.add(fitxerBDService.getFitxerBD(id));
         }
-        return toReturn;
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
 
     @GetMapping("/fitxer")

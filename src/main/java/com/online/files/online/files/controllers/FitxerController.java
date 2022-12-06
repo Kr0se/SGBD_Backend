@@ -50,11 +50,11 @@ public class FitxerController
         return  "redirect:/fitxers/" + f.getNom();
     }*/
 
-    @GetMapping("/fitxerBD")
-    public FitxerBD getFitxer(@RequestBody FitxerDTO fitxer) throws IOException {
+    @PostMapping("/fitxerBD")
+    public ResponseEntity<FitxerBD> getFitxer(@RequestBody FitxerDTO fitxer) throws IOException {
 
         String fitxerDBId = fitxerService.getFitxerBD(fitxer);
-        return fitxerBDService.getFitxerBD(fitxerDBId);
+        return new ResponseEntity<>(fitxerBDService.getFitxerBD(fitxerDBId),HttpStatus.OK);
 
     }
 
