@@ -63,11 +63,14 @@ public class FitxerUsuariService {
         return listFU.get();
     }
 
-    public void deleteFitxerUsuariOfUser(Collection<FitxerUsuari> fus){
+    public Collection<User> deleteFitxerUsuariOfUser(Collection<FitxerUsuari> fus){
 
+        Collection<User> users = new ArrayList<>();
         for (FitxerUsuari fu:fus){
             userService.deleteFitxerUsuari(fu);
             fitxerUsuariRepository.delete(fu);
+            users.add(userService.getUser(fu.getUserId()));
         }
+        return users;
     }
 }

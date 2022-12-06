@@ -2,6 +2,7 @@ package com.online.files.online.files.controllers;
 
 import com.online.files.online.files.DTO.FitxerDTO;
 import com.online.files.online.files.models.FitxerUsuari;
+import com.online.files.online.files.models.User;
 import com.online.files.online.files.models.fitxers.Fitxer;
 import com.online.files.online.files.models.fitxers.FitxerBD;
 import com.online.files.online.files.repositories.FitxerRepository;
@@ -51,7 +52,7 @@ public class FitxerController
 
         String id = fitxerBDService.createFitxerBD(file);
         Date d = fitxerBDService.getUploadDate(id);
-        Fitxer f = fitxerService.createFitxer(file.getOriginalFilename(),file.getContentType(),d,id);
+        Fitxer f = fitxerService.createFitxer(file.getOriginalFilename(),file.getContentType().split("/")[0],d,id);
         fitxerUsuariService.createFitxerUsuari(f.getId(),username,true);
         return  new ResponseEntity<>(f,HttpStatus.OK);
     }
@@ -75,17 +76,17 @@ public class FitxerController
     * borrar fitxer bd
     * borrar fitxer */
     @DeleteMapping()
-    public String deleteFitxer(@RequestParam("fitxerID") String fitxerId){
+    public ResponseEntity<Collection<User>> deleteFitxer(@RequestBody FitxerDTO fitxer){
 
-        Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByFitxer(fitxerId);
-        fitxerUsuariService.deleteFitxerUsuariOfUser(fus);
-        fitxerService.deleteFitxer(fitxerId);
-        return "Fitxer amb ID: " + fitxerId + " s'ha esborrat correctament";
+        Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByFitxer(fitxer.getId());
+        Collection<User> users = fitxerUsuariService.deleteFitxerUsuariOfUser(fus);
+        fitxerService.deleteFitxer(fitxer.getId());
+        return new ResponseEntity<>(users,HttpStatus.OK);
     }
 
-    @GetMapping("/tipus")
-    public Collection<Fitxer> getFitxerByTipus(@RequestParam("tipus") String tipus) {
-        return fitxerService.getFitxerByTipus(tipus);
+    @PostMapping("/tipus")
+    public ResponseEntity<Collection<FitxerBD>> getFitxerByTipus(@RequestBody FitxerDTO fitxer) throws IOException {
+        return new ResponseEntity<>(fitxerService.getFitxerByTipus(fitxer.getTipus()),HttpStatus.OK);
     }
 
     @GetMapping("/data")

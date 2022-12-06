@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
@@ -69,8 +70,13 @@ public class FitxerService
         fitxerRepository.delete(f);
     }
 
-    public Collection<Fitxer> getFitxerByTipus(String tipus){
-        return fitxerRepository.findByTipus(tipus);
+    public Collection<FitxerBD> getFitxerByTipus(String tipus) throws IOException {
+        Collection<FitxerBD> fitxerBDS = new ArrayList<>();
+        Collection<Fitxer> ftxs = fitxerRepository.findByTipus(tipus);
+        for(Fitxer f : ftxs){
+            fitxerBDS.add(fitxerBDService.getFitxerBD(f.getFitxerDBId()));
+        }
+        return fitxerBDS;
     }
 
     public Collection<Fitxer> getFitxerByDataPujada(Date data){
