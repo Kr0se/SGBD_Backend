@@ -151,7 +151,7 @@ public class User {
     }
 
     //Mirem si la carpeta conte aquest fitxer
-    if(actual.existFiles(f.getId())){
+    if(actual.existFiles(f.getNom())){
       throw new Exception("La carpeta ja conte aquest fitxer");
     }
 
@@ -175,11 +175,11 @@ public class User {
     }
 
     //Mirem si la carpeta conte el fitxer
-    if(!actual.existFiles(f.getId())){
+    if(!actual.existFiles(f.getNom())){
       throw new Exception("La carpeta no conte el fitxer");
     }
     
-    actual.removeFile(f.getId());
+    actual.removeFile(f.getNom());
     return this;
   }
 

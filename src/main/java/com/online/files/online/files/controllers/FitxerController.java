@@ -1,5 +1,6 @@
 package com.online.files.online.files.controllers;
 
+import com.online.files.online.files.DTO.FileFolderDTO;
 import com.online.files.online.files.DTO.FitxerDTO;
 import com.online.files.online.files.models.FitxerUsuari;
 import com.online.files.online.files.models.User;
@@ -47,14 +48,19 @@ public class FitxerController
     public Collection<Fitxer> getFitxers(){ return fitxerService.getFitxers();}
 
     @PostMapping(path = "/{username}/upload")
-    public ResponseEntity<Fitxer> pujarFitxer(@PathVariable("username") String username,
+    public User pujarFitxer(@PathVariable("username") String username,
+            @RequestParam("path") String path,
             @RequestParam("file") MultipartFile file, Model model) throws IOException {
 
         String id = fitxerBDService.createFitxerBD(file);
         Date d = fitxerBDService.getUploadDate(id);
         Fitxer f = fitxerService.createFitxer(file.getOriginalFilename(),file.getContentType().split("/")[0],d,id);
         fitxerUsuariService.createFitxerUsuari(f.getId(),username,true);
-        return  new ResponseEntity<>(f,HttpStatus.OK);
+        FileFolderDTO ff = new FileFolderDTO();
+        ff.setPath(path);
+        ff.setFitxerID(f.getId());
+        userService.addFile(username, ff);
+        return  userService.getUserByUserName(username);
     }
 
     @PostMapping("/fitxerBD")

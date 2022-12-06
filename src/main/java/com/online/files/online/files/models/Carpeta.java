@@ -93,9 +93,9 @@ public class Carpeta {
     return fitxers;
   }
 
-  public boolean existFiles(String fID) {
+  public boolean existFiles(String fNom) {
     for (Fitxer fitxer : fitxers) {
-      if (fitxer.getId().equals(fID))
+      if (fitxer.getNom().equals(fNom))
         return true;
     }
     return false;
@@ -106,9 +106,9 @@ public class Carpeta {
     return this;
   }
 
-  public Carpeta removeFile(String fID){
+  public Carpeta removeFile(String fNom){
     for (Fitxer fitxer : fitxers) {
-      if (fitxer.getId().equals(fID)){
+      if (fitxer.getNom().equals(fNom)){
         fitxers.remove(fitxer);
         return this;
       }
