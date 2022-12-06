@@ -8,6 +8,7 @@ import com.online.files.online.files.repositories.FitxerRepository;
 import com.online.files.online.files.services.FitxerService;
 import com.online.files.online.files.services.FitxerBDService;
 import com.online.files.online.files.services.FitxerUsuariService;
+import com.online.files.online.files.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -38,24 +39,26 @@ public class FitxerController
     @Autowired
     private FitxerUsuariService fitxerUsuariService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping()
     public Collection<Fitxer> getFitxers(){ return fitxerService.getFitxers();}
 
-    /*@PostMapping(path = "/add", value = "/data", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Fitxer> addFitxer(@RequestParam("title") String title, @RequestParam("type") String tipus,
-                                    @RequestParam("file") MultipartFile file, Model model) throws IOException {
-        String id = fitxerBDService.createFitxerBD(title,tipus, file);
+    @PostMapping(path = "/{username}/upload")
+    public ResponseEntity<Fitxer> pujarFitxer(@PathVariable("username") String username,
+            @RequestParam("file") MultipartFile file, Model model) throws IOException {
+
+        String id = fitxerBDService.createFitxerBD(file);
         Date d = fitxerBDService.getUploadDate(id);
-        Fitxer f = fitxerService.createFitxer(title,tipus,d,id);
-        return  "redirect:/fitxers/" + f.getNom();
-    }*/
+        Fitxer f = fitxerService.createFitxer(file.getOriginalFilename(),file.getContentType(),d,id);
+        fitxerUsuariService.createFitxerUsuari(f.getId(),username,true);
+        return  new ResponseEntity<>(f,HttpStatus.OK);
+    }
 
     @PostMapping("/fitxerBD")
     public ResponseEntity<FitxerBD> getFitxer(@RequestBody FitxerDTO fitxer) throws IOException {
-
-        String fitxerDBId = fitxerService.getFitxerBD(fitxer);
-        return new ResponseEntity<>(fitxerBDService.getFitxerBD(fitxerDBId),HttpStatus.OK);
-
+        return new ResponseEntity<>(fitxerService.getFitxerBD(fitxer),HttpStatus.OK);
     }
 
     /*@GetMapping("/dataPujada")

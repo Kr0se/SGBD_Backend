@@ -30,19 +30,16 @@ public class FitxerBDService {
     @Autowired
     private GridFsOperations operations;
 
-    public String createFitxerBD(String title,String tipus, MultipartFile file) throws IOException {
-        DBObject metaData = new BasicDBObject();
-        metaData.put("type", tipus);
-        metaData.put("title", title);
+    public String createFitxerBD(MultipartFile file) throws IOException {
         ObjectId id = gridFsTemplate.store(
-                file.getInputStream(), file.getName(), file.getContentType(), metaData);
+                file.getInputStream(), file.getOriginalFilename(), file.getContentType());
         return id.toString();
     }
 
     public FitxerBD getFitxerBD(String id) throws IllegalStateException, IOException {
         GridFSFile file = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
         FitxerBD fitxerBD = new FitxerBD();
-        fitxerBD.setTitle(file.getMetadata().get("title").toString());
+        fitxerBD.setTitle(file.getFilename());
         fitxerBD.setStream(operations.getResource(file).getInputStream());
         return fitxerBD;
     }

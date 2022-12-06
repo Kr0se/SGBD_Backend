@@ -31,10 +31,8 @@ public class FitxerUsuariController {
     @Autowired
     FitxerService fitxerService;
 
-    @Autowired
-    FitxerBDService fitxerBDService;
 
-    @PostMapping(path = "/add")
+    /*@PostMapping(path = "/add")
     public String afegirRelacio(@RequestParam("fitxerID") String fitxerID, @RequestParam("userID") String userID, @RequestParam("esPropietari") Boolean esPropietari) throws IOException {
 
         FitxerUsuari fu = fitxerUsuariService.createFitxerUsuari(fitxerID,userID, esPropietari);
@@ -45,20 +43,14 @@ public class FitxerUsuariController {
         userService.addFitxerUser(u, fu);
 
         return "redirect:/fitxer:" + fu.getFitxerId() + "/user:" + fu.getUserId();
-    }
+    }*/
 
     @GetMapping()
     public Collection<FitxerUsuari> getFitxersUsuaris(){ return fitxerUsuariService.getFitxersUsuaris();}
 
     @PostMapping("/usuari")
     public ResponseEntity<Collection<FitxerBD>> getFitxersUsuarisByUsuari(@RequestBody UserAuthDTO user) throws IOException {
-        Collection<FitxerBD> toReturn = new ArrayList<>();
-        Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(user);
-        for(FitxerUsuari fu:fus){
-            String id = fitxerService.getFitxerBD(fu.getFitxerId());
-            toReturn.add(fitxerBDService.getFitxerBD(id));
-        }
-        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+        return new ResponseEntity<>(fitxerUsuariService.getListFitxerUsuariByUsuari(user), HttpStatus.OK);
     }
 
     @GetMapping("/fitxer")

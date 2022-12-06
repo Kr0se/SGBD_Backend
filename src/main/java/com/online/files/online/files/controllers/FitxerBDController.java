@@ -22,7 +22,7 @@ public class FitxerBDController {
     @PostMapping("/add")
     public String addFitxerBD(@RequestParam("title") String title,@RequestParam("type") String tipus,
                            @RequestParam("file") MultipartFile file, Model model) throws IOException {
-        String id = fitxerBDService.createFitxerBD(title,tipus, file);
+        String id = fitxerBDService.createFitxerBD(file);
         return "redirect:/videos/" + id;
     }
 

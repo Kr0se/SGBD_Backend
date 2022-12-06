@@ -3,10 +3,12 @@ package com.online.files.online.files.services;
 import com.online.files.online.files.DTO.FitxerDTO;
 import com.online.files.online.files.models.fitxers.Fitxer;
 import com.online.files.online.files.models.FitxerUsuari;
+import com.online.files.online.files.models.fitxers.FitxerBD;
 import com.online.files.online.files.repositories.FitxerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
@@ -43,18 +45,18 @@ public class FitxerService
         return f.get();
     }
 
-    public String getFitxerBD(FitxerDTO fitxer){
+    public FitxerBD getFitxerBD(FitxerDTO fitxer) throws IOException {
         Optional<Fitxer> f = fitxerRepository.findById(fitxer.getId());
         if (f.isEmpty())
             throw new RuntimeException("No existeix un fitxer amb aquesta id");
-        return f.get().getFitxerDBId();
+        return fitxerBDService.getFitxerBD(f.get().getFitxerDBId());
     }
 
-    public String getFitxerBD(String fitxerId){
+    public FitxerBD getFitxerBD(String fitxerId) throws IOException {
         Optional<Fitxer> f = fitxerRepository.findById(fitxerId);
         if (f.isEmpty())
             throw new RuntimeException("No existeix un fitxer amb aquesta id");
-        return f.get().getFitxerDBId();
+        return fitxerBDService.getFitxerBD(f.get().getFitxerDBId());
     }
 
     public Fitxer getFitxerByNom(String nom){
