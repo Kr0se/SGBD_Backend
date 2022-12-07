@@ -23,6 +23,7 @@ import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 
 @RequestMapping(path = "/fitxers")
 @RestController
@@ -70,21 +71,31 @@ public class FitxerController
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<User> deleteFitxer(@PathVariable("id") String id, @RequestBody FitxerDTO file){
-
-        file.getPath(); //per obtenir path
-
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByFitxer(id);
         User user = fitxerUsuariService.deleteFitxerUsuariOfUser(fus);
+        FileFolderDTO ff = new FileFolderDTO();
+        ff.setPath(file.getPath());
+        ff.setFitxerID(id);
+        userService.removeFile(user.getUsername(), ff);
         fitxerService.deleteFitxer(id);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
     @PostMapping("/rename/{id}")
     public ResponseEntity<User> renameFitxer(@PathVariable("id") String id, @RequestBody FitxerDTO file){
-        
-        file.getPath(); //per obtenir path
-        
-        return new ResponseEntity<>(new User(), HttpStatus.OK);
+        FileFolderDTO ff = new FileFolderDTO();
+        ff.setPath(file.getPath());
+        ff.setFitxerID(id);
+        Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByFitxer(id);
+        User user = new User();
+        Iterator<FitxerUsuari> it = fus.iterator();
+        while (it.hasNext() && user == null){
+            FitxerUsuari fu = (FitxerUsuari)it.next();
+            if (fu.getEsPropietari())
+                user = userService.getUser(fu.getUserId());
+        }
+        userService.renameFile(user.getUsername(),ff,file.getNouNom());
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
     /*@GetMapping("/dataPujada")
