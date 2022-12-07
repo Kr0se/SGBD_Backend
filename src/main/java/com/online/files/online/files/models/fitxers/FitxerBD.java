@@ -7,6 +7,7 @@ import java.io.InputStream;
 @Document(collection = "videos")
 public class FitxerBD {
     private String title;
+    private String type;
     private InputStream stream;
 
     public FitxerBD(){}
@@ -25,6 +26,8 @@ public class FitxerBD {
         this.title = title;
     }
 
+    public void setType(String type){ this.type = type;}
+
     public void setStream(InputStream inputStream) {
         this.stream = inputStream;
     }
@@ -32,6 +35,8 @@ public class FitxerBD {
     public Object getTitle() {
         return this.title;
     }
+
+    public String getType(){ return this.type;}
 
     public InputStream getStream() {
         return this.stream;

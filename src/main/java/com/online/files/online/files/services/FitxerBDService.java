@@ -40,6 +40,7 @@ public class FitxerBDService {
         GridFSFile file = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
         FitxerBD fitxerBD = new FitxerBD();
         fitxerBD.setTitle(file.getFilename());
+        fitxerBD.setType(file.getMetadata().get("_contentType").toString());
         fitxerBD.setStream(operations.getResource(file).getInputStream());
         return fitxerBD;
     }

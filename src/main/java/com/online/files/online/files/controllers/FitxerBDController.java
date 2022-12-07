@@ -2,7 +2,12 @@ package com.online.files.online.files.controllers;
 
 import com.online.files.online.files.models.fitxers.FitxerBD;
 import com.online.files.online.files.services.FitxerBDService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +36,16 @@ public class FitxerBDController {
                                  @RequestParam("file") MultipartFile file, Model model) throws IOException {
         String idNou = fitxerBDService.updateFitxerBD(id,file);
         return "redirect:/videos/" + idNou;
+    }
+
+    @GetMapping("/download")
+    public ResponseEntity<ByteArrayResource> download(@RequestParam String id) throws IOException {
+        FitxerBD fitxerBD = fitxerBDService.getFitxerBD(id);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(fitxerBD.getType() ))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fitxerBD.getTitle() + "\"")
+                .body(new ByteArrayResource(IOUtils.toByteArray(fitxerBD.getStream())));
     }
 
     @GetMapping("/{id}")
