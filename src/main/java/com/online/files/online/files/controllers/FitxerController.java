@@ -48,7 +48,7 @@ public class FitxerController
     public Collection<Fitxer> getFitxers(){ return fitxerService.getFitxers();}
 
     @PostMapping(path = "/{username}/upload")
-    public User pujarFitxer(@PathVariable("username") String username,
+    public ResponseEntity <User> pujarFitxer(@PathVariable("username") String username,
             @RequestParam("path") String path,
             @RequestParam("file") MultipartFile file, Model model) throws IOException {
 
@@ -60,7 +60,7 @@ public class FitxerController
         ff.setPath(path);
         ff.setFitxerID(f.getId());
         userService.addFile(username, ff);
-        return  userService.getUserByUserName(username);
+        return new ResponseEntity<> (userService.getUserByUserName(username), HttpStatus.OK);
     }
 
     @PostMapping("/fitxerBD")
