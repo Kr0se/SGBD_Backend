@@ -1,5 +1,6 @@
 package com.online.files.online.files.services;
 
+import com.online.files.online.files.DTO.RelacioDTO;
 import com.online.files.online.files.DTO.UserAuthDTO;
 import com.online.files.online.files.models.FitxerUsuari;
 import com.online.files.online.files.models.User;
@@ -42,6 +43,30 @@ public class FitxerUsuariService {
         return fu;
     }
 
+    public FitxerUsuari createFitxerUsuariCompartit(RelacioDTO relacio){
+
+        User user = userService.getUser(relacio.getUserId());
+        Fitxer fitxer = fitxerService.getFitxer(relacio.getFitxerId());
+
+        FitxerUsuari fu = new FitxerUsuari(relacio.getFitxerId(), relacio.getUserId(), false);
+        fitxerUsuariRepository.save(fu);
+
+        fitxerService.addFitxerUser(fitxer,fu);
+        userService.addFitxerUser(user, fu);
+
+        return fu;
+    }
+
+    public Boolean esPropietari(String fitxerId, String userId){
+
+        Optional<FitxerUsuari> fu = fitxerUsuariRepository.findByFitxerIdAndUserId(fitxerId,userId);
+        if(fu.isEmpty()){
+            throw new RuntimeException("Aquesta relacio no existeix");
+        }
+        return fu.get().getEsPropietari();
+    }
+
+
     public Collection<FitxerBD> getListFitxerUsuariByUsuari(UserAuthDTO userDTO) throws IOException {
 
         Collection<FitxerBD> toReturn = new ArrayList<>();
@@ -63,14 +88,16 @@ public class FitxerUsuariService {
         return listFU.get();
     }
 
-    public Collection<User> deleteFitxerUsuariOfUser(Collection<FitxerUsuari> fus){
+    public User deleteFitxerUsuariOfUser(Collection<FitxerUsuari> fus){
 
-        Collection<User> users = new ArrayList<>();
+        User user = new User();
         for (FitxerUsuari fu:fus){
             userService.deleteFitxerUsuari(fu);
             fitxerUsuariRepository.delete(fu);
-            users.add(userService.getUser(fu.getUserId()));
+            if (fu.getEsPropietari())
+                user = userService.getUser(fu.getUserId());
         }
-        return users;
+        return user;
     }
+
 }

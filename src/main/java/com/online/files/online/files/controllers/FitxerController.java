@@ -68,21 +68,15 @@ public class FitxerController
         return new ResponseEntity<>(fitxerService.getFitxerBD(id),HttpStatus.OK);
     }
 
-    /*
-    * get relacions
-    * borrar relacions de list del user
-    * borrar relacions com a tal
-    * borrar fitxer bd
-    * borrar fitxer */
-    @PostMapping("/delete/{id}")
-    public ResponseEntity<Collection<User>> deleteFitxer(@PathVariable("id") String id, @RequestBody FitxerDTO file){
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<User> deleteFitxer(@PathVariable("id") String id, @RequestBody FitxerDTO file){
 
         file.getPath(); //per obtenir path
 
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByFitxer(id);
-        Collection<User> users = fitxerUsuariService.deleteFitxerUsuariOfUser(fus);
+        User user = fitxerUsuariService.deleteFitxerUsuariOfUser(fus);
         fitxerService.deleteFitxer(id);
-        return new ResponseEntity<>(users,HttpStatus.OK);
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
     @PostMapping("/rename/{id}")

@@ -22,7 +22,7 @@ public class Fitxer
 
     private Date dataPujada;
 
-    private String fitxerDBId;
+    private String fitxerBDId;
 
     @DBRef
     private List<FitxerUsuari> fitxerUsuariList = new ArrayList<>();
@@ -33,7 +33,7 @@ public class Fitxer
         this.nom = nom;
         this.tipus = tipus;
         this.dataPujada = date;
-        this.fitxerDBId = idDB;
+        this.fitxerBDId = idDB;
     }
 
     public String getId() {
@@ -42,9 +42,11 @@ public class Fitxer
 
     public String getNom(){return this.nom;}
 
+    public void setNom(String nom){ this.nom = nom;}
+
     public Date getDataPujada(){return this.dataPujada;}
 
-    public String getFitxerDBId(){return this.fitxerDBId;}
+    public String getFitxerDBId(){return this.fitxerBDId;}
 
 
     public void addFitxerUsuari(FitxerUsuari fu){
@@ -53,6 +55,6 @@ public class Fitxer
 
     @Override
     public String toString(){
-        return "Fitxer [id= " + id + ", nom= " + nom + ", Fitxer= " + fitxerDBId + "]";
+        return "Fitxer [id= " + id + ", nom= " + nom + ", Fitxer= " + fitxerBDId + "]";
     }
 }

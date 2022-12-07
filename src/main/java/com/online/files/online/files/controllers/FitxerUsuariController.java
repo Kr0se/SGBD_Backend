@@ -1,5 +1,6 @@
 package com.online.files.online.files.controllers;
 
+import com.online.files.online.files.DTO.RelacioDTO;
 import com.online.files.online.files.DTO.UserAuthDTO;
 import com.online.files.online.files.models.fitxers.Fitxer;
 import com.online.files.online.files.models.FitxerUsuari;
@@ -31,19 +32,11 @@ public class FitxerUsuariController {
     @Autowired
     private FitxerService fitxerService;
 
+    @PostMapping(path = "/add")
+    public ResponseEntity<FitxerUsuari> afegirRelacio(@RequestBody RelacioDTO relacioDTO) throws IOException {
 
-    /*@PostMapping(path = "/add")
-    public String afegirRelacio(@RequestParam("fitxerID") String fitxerID, @RequestParam("userID") String userID, @RequestParam("esPropietari") Boolean esPropietari) throws IOException {
-
-        FitxerUsuari fu = fitxerUsuariService.createFitxerUsuari(fitxerID,userID, esPropietari);
-        Fitxer f = fitxerService.getFitxer(fitxerID);
-        User u = userService.getUser(userID);
-
-        fitxerService.addFitxerUser(f,fu);
-        userService.addFitxerUser(u, fu);
-
-        return "redirect:/fitxer:" + fu.getFitxerId() + "/user:" + fu.getUserId();
-    }*/
+        return new ResponseEntity<>(fitxerUsuariService.createFitxerUsuariCompartit(relacioDTO),HttpStatus.OK);
+    }
 
     @GetMapping()
     public Collection<FitxerUsuari> getFitxersUsuaris(){ return fitxerUsuariService.getFitxersUsuaris();}

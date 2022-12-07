@@ -13,4 +13,6 @@ public interface FitxerUsuariRepository extends MongoRepository<FitxerUsuari,Str
     Optional<Collection<FitxerUsuari>> findByfitxerId(String fitxerId);
 
     Optional<Collection<FitxerUsuari>> findByuserId(String userId);
+
+    Optional<FitxerUsuari> findByFitxerIdAndUserId(String fitxerId, String userId);
 }
