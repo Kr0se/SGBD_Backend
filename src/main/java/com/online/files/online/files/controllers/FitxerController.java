@@ -75,7 +75,9 @@ public class FitxerController
     * borrar fitxer bd
     * borrar fitxer */
     @PostMapping("/delete/{id}")
-    public ResponseEntity<Collection<User>> deleteFitxer(@PathVariable("id") String id){
+    public ResponseEntity<Collection<User>> deleteFitxer(@PathVariable("id") String id, @RequestBody FitxerDTO file){
+
+        file.getPath(); //per obtenir path
 
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByFitxer(id);
         Collection<User> users = fitxerUsuariService.deleteFitxerUsuariOfUser(fus);
@@ -84,8 +86,9 @@ public class FitxerController
     }
 
     @PostMapping("/rename/{id}")
-    public ResponseEntity<User> renameFitxer(@PathVariable("id") String id){
-
+    public ResponseEntity<User> renameFitxer(@PathVariable("id") String id, @RequestBody FitxerDTO file){
+        
+        file.getPath(); //per obtenir path
         
         return new ResponseEntity<>(new User(), HttpStatus.OK);
     }
