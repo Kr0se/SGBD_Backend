@@ -23,13 +23,13 @@ import java.util.Collection;
 public class FitxerUsuariController {
 
     @Autowired
-    FitxerUsuariService fitxerUsuariService;
+    private FitxerUsuariService fitxerUsuariService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    FitxerService fitxerService;
+    private FitxerService fitxerService;
 
 
     /*@PostMapping(path = "/add")

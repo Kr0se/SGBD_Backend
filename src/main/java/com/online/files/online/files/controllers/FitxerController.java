@@ -63,9 +63,31 @@ public class FitxerController
         return new ResponseEntity<> (userService.getUserByUserName(username), HttpStatus.OK);
     }
 
-    @PostMapping("/fitxerBD")
-    public ResponseEntity<FitxerBD> getFitxer(@RequestBody FitxerDTO fitxer) throws IOException {
-        return new ResponseEntity<>(fitxerService.getFitxerBD(fitxer),HttpStatus.OK);
+    @GetMapping("/get/{id}")
+    public ResponseEntity<FitxerBD> getFitxer(@PathVariable("id") String id) throws IOException {
+        return new ResponseEntity<>(fitxerService.getFitxerBD(id),HttpStatus.OK);
+    }
+
+    /*
+    * get relacions
+    * borrar relacions de list del user
+    * borrar relacions com a tal
+    * borrar fitxer bd
+    * borrar fitxer */
+    @PostMapping("/delete/{id}")
+    public ResponseEntity<Collection<User>> deleteFitxer(@PathVariable("id") String id){
+
+        Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByFitxer(id);
+        Collection<User> users = fitxerUsuariService.deleteFitxerUsuariOfUser(fus);
+        fitxerService.deleteFitxer(id);
+        return new ResponseEntity<>(users,HttpStatus.OK);
+    }
+
+    @PostMapping("/rename/{id}")
+    public ResponseEntity<User> renameFitxer(@PathVariable("id") String id){
+
+        
+        return new ResponseEntity<>(new User(), HttpStatus.OK);
     }
 
     /*@GetMapping("/dataPujada")
@@ -74,21 +96,6 @@ public class FitxerController
         String fitxerDBId = fitxerService.getFitxerBD(fitxerId);
         return fitxerBDService.getUploadDate(fitxerDBId);
     }*/
-
-    /*
-    * get relacions
-    * borrar relacions de list del user
-    * borrar relacions com a tal
-    * borrar fitxer bd
-    * borrar fitxer */
-    @DeleteMapping()
-    public ResponseEntity<Collection<User>> deleteFitxer(@RequestBody FitxerDTO fitxer){
-
-        Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByFitxer(fitxer.getId());
-        Collection<User> users = fitxerUsuariService.deleteFitxerUsuariOfUser(fus);
-        fitxerService.deleteFitxer(fitxer.getId());
-        return new ResponseEntity<>(users,HttpStatus.OK);
-    }
 
     @PostMapping("/tipus")
     public ResponseEntity<Collection<FitxerBD>> getFitxerByTipus(@RequestBody FitxerDTO fitxer) throws IOException {
