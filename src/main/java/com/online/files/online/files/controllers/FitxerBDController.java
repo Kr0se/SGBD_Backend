@@ -26,6 +26,13 @@ public class FitxerBDController {
         return "redirect:/videos/" + id;
     }
 
+    @PostMapping("/update")
+    public String updateFitxerBD(@RequestParam("id") String id,
+                                 @RequestParam("file") MultipartFile file, Model model) throws IOException {
+        String idNou = fitxerBDService.updateFitxerBD(id,file);
+        return "redirect:/videos/" + idNou;
+    }
+
     @GetMapping("/{id}")
     public String getFitxerBD(@PathVariable String id, Model model) throws Exception {
         FitxerBD fitxerBD = fitxerBDService.getFitxerBD(id);

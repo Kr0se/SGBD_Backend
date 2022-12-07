@@ -44,6 +44,11 @@ public class FitxerBDService {
         return fitxerBD;
     }
 
+    public String updateFitxerBD(String id, MultipartFile file) throws IOException {
+       this.deleteFitxerBD(id);
+       return this.createFitxerBD(file);
+    }
+
     public Collection<FitxerBD> getFitxersBD() throws IllegalStateException, IOException{
         GridFSFindIterable files = gridFsTemplate.find(new Query());
         Collection<FitxerBD> fitxerBDS = new ArrayList<>();
