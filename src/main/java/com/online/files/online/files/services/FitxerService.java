@@ -7,6 +7,7 @@ import com.online.files.online.files.models.fitxers.FitxerBD;
 import com.online.files.online.files.repositories.FitxerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,8 +69,21 @@ public class FitxerService
         Fitxer fitxer = this.getFitxer(id);
         fitxer.setNom(nouNom);
         String nouIdBD = fitxerBDService.renameFitxerBD(fitxer.getFitxerDBId(),nouNom);
+        fitxer.setDataPujada(fitxerBDService.getUploadDate(nouIdBD));
         fitxer.setFitxerBDId(nouIdBD);
         fitxerRepository.save(fitxer);
+    }
+
+    public Fitxer updateFitxer(String id, MultipartFile file) throws IOException {
+        Fitxer fitxer = this.getFitxer(id);
+        String idBDNou = fitxerBDService.updateFitxerBD(fitxer.getFitxerDBId(),file);
+        fitxer.setNom(file.getOriginalFilename());
+        fitxer.setTipus(file.getContentType().split("/")[0]);
+        fitxer.setDataPujada(fitxerBDService.getUploadDate(idBDNou));
+        fitxer.setFitxerBDId(idBDNou);
+        fitxerRepository.save(fitxer);
+
+        return fitxer;
     }
 
     public void deleteFitxer(String fitxerID){

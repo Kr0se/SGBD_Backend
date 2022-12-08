@@ -242,4 +242,39 @@ public class UserService {
         this.userRepository.save(u);
         return true;
     }
+
+    public Boolean updateFile(String username, FileFolderDTO fileFolder, Fitxer fitxerActualitzat){
+        //Mirem si l'usuari existeix al sistema
+        User u = userRepository.findByUsername(username);
+        if(u == null){
+            throw new RuntimeException("No existeix un usuari amb aquest username");
+        }
+        List<String> itemsPath = Arrays.asList(fileFolder.getPath().split("/")); //cada subcarpeta esta separada per un /
+        itemsPath = itemsPath.subList(1, itemsPath.size()); //s'elimina la main
+
+        //Mirem si el fitxer existeix al sistema
+        Optional<Fitxer> f = fitxerRepository.findById(fileFolder.getFitxerID());
+        if (f.isEmpty())
+            return false;
+
+        //Intentem borrar el fitxer de la carpeta a l'estructura de l'usuari
+        //Retornem l'usuari amb el fitxer borrat de la carpeta
+        try {
+            u = u.removeFile(itemsPath, f.get());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        //f.get().setNom(nomFitxer); fitxer vell
+        //Intentem afegir el fitxer a la carpeta a l'estructura de l'usuari
+        //Retornem l'usuari amb el fitxer inserit a la carpeta
+        try {
+            u = u.addFile(itemsPath, fitxerActualitzat);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        this.userRepository.save(u);
+        return true;
+    }
 }

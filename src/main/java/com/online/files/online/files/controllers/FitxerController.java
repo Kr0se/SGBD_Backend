@@ -115,9 +115,28 @@ public class FitxerController
             if (fu.getEsPropietari())
                 user = userService.getUser(fu.getUserId());
         }
-        userService.renameFile(user.getUsername(),ff,file.getNouNom());
         fitxerService.renameFitxer(id,file.getNouNom());
+        userService.renameFile(user.getUsername(),ff,file.getNouNom());
 
+        return new ResponseEntity<>(userRepository.findByUsername(user.getUsername()),HttpStatus.OK);
+    }
+
+    @PostMapping("/update/{id}")
+    public ResponseEntity<User> updateFitxer(@PathVariable("id") String id,
+                                             @RequestParam("path") String path, @RequestParam("file") MultipartFile file, Model model ) throws IOException {
+        FileFolderDTO ff = new FileFolderDTO();
+        ff.setPath(path);
+        ff.setFitxerID(id);
+        Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByFitxer(id);
+        User user = new User();
+        Iterator<FitxerUsuari> it = fus.iterator();
+        while (it.hasNext() && user != null){
+            FitxerUsuari fu = (FitxerUsuari)it.next();
+            if (fu.getEsPropietari())
+                user = userService.getUser(fu.getUserId());
+        }
+        Fitxer fitxer = fitxerService.updateFitxer(id,file); // retorna el fitxer que volem canviar actualitzar
+        userService.updateFile(user.getUsername(),ff,fitxer); //-> fer metode com el rename q actualitzi el fitxer sencer
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 

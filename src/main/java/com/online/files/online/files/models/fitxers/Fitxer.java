@@ -36,6 +36,13 @@ public class Fitxer
         this.fitxerBDId = idDB;
     }
 
+    public Fitxer(Fitxer f){
+        this.nom = f.nom;
+        this.tipus = f.tipus;
+        this.dataPujada = f.dataPujada;
+        this.fitxerBDId = f.fitxerBDId;
+    }
+
     public String getId() {
         return this.id;
     }
@@ -44,7 +51,15 @@ public class Fitxer
 
     public void setNom(String nom){ this.nom = nom;}
 
+    public String getTipus(){return tipus;}
+
+    public void setTipus(String tipus){this.tipus = tipus;}
+
     public Date getDataPujada(){return this.dataPujada;}
+
+    public void setDataPujada(Date dataPujada) {
+        this.dataPujada = dataPujada;
+    }
 
     public String getFitxerDBId(){return this.fitxerBDId;}
 
