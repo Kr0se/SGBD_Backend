@@ -82,7 +82,7 @@ public class FitxerController
 
     @GetMapping("/get/{id}")
     public ResponseEntity<ByteArrayResource> download(@PathVariable("id") String id) throws IOException {
-        FitxerBD fitxerBD = fitxerBDService.getFitxerBD(id);
+        FitxerBD fitxerBD = fitxerService.getFitxerBD(id);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(fitxerBD.getType() ))
