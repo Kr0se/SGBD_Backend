@@ -48,6 +48,8 @@ public class Fitxer
 
     public String getFitxerDBId(){return this.fitxerBDId;}
 
+    public void setFitxerBDId(String id){ this.fitxerBDId = id;}
+
 
     public void addFitxerUsuari(FitxerUsuari fu){
         fitxerUsuariList.add(fu);

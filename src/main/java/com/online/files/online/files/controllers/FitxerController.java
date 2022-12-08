@@ -103,7 +103,7 @@ public class FitxerController
     }
 
     @PostMapping("/rename/{id}")
-    public ResponseEntity<User> renameFitxer(@PathVariable("id") String id, @RequestBody FitxerDTO file){
+    public ResponseEntity<User> renameFitxer(@PathVariable("id") String id, @RequestBody FitxerDTO file) throws IOException {
         FileFolderDTO ff = new FileFolderDTO();
         ff.setPath(file.getPath());
         ff.setFitxerID(id);
@@ -116,6 +116,8 @@ public class FitxerController
                 user = userService.getUser(fu.getUserId());
         }
         userService.renameFile(user.getUsername(),ff,file.getNouNom());
+        fitxerService.renameFitxer(id,file.getNouNom());
+
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 

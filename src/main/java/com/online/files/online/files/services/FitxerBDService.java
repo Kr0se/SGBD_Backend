@@ -50,6 +50,14 @@ public class FitxerBDService {
        return this.createFitxerBD(file);
     }
 
+    public String renameFitxerBD(String id, String nouNom) throws IOException {
+        FitxerBD fitxerBD = this.getFitxerBD(id);
+        ObjectId idNou = gridFsTemplate.store(
+                fitxerBD.getStream(), nouNom, fitxerBD.getType());
+        this.deleteFitxerBD(id);
+        return idNou.toString();
+    }
+
     public Collection<FitxerBD> getFitxersBD() throws IllegalStateException, IOException{
         GridFSFindIterable files = gridFsTemplate.find(new Query());
         Collection<FitxerBD> fitxerBDS = new ArrayList<>();

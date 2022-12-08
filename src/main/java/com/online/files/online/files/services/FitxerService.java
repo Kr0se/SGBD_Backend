@@ -64,6 +64,14 @@ public class FitxerService
         return fitxerRepository.findByNom(nom);
     }
 
+    public void renameFitxer(String id, String nouNom) throws IOException {
+        Fitxer fitxer = this.getFitxer(id);
+        fitxer.setNom(nouNom);
+        String nouIdBD = fitxerBDService.renameFitxerBD(fitxer.getFitxerDBId(),nouNom);
+        fitxer.setFitxerBDId(nouIdBD);
+        fitxerRepository.save(fitxer);
+    }
+
     public void deleteFitxer(String fitxerID){
         Fitxer f = getFitxer(fitxerID);
         fitxerBDService.deleteFitxerBD(f.getFitxerDBId());
