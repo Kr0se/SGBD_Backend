@@ -110,7 +110,7 @@ public class FitxerController
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByFitxer(id);
         User user = new User();
         Iterator<FitxerUsuari> it = fus.iterator();
-        while (it.hasNext() && user == null){
+        while (it.hasNext() && user != null){
             FitxerUsuari fu = (FitxerUsuari)it.next();
             if (fu.getEsPropietari())
                 user = userService.getUser(fu.getUserId());
