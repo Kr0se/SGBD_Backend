@@ -140,13 +140,6 @@ public class FitxerController
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
-    /*@GetMapping("/dataPujada")
-    public Date getUploadData(@RequestParam("fitxerID") String fitxerId) throws IOException {
-
-        String fitxerDBId = fitxerService.getFitxerBD(fitxerId);
-        return fitxerBDService.getUploadDate(fitxerDBId);
-    }*/
-
     @PostMapping("/tipus")
     public ResponseEntity<Collection<FitxerBD>> getFitxerByTipus(@RequestBody FitxerDTO fitxer) throws IOException {
         return new ResponseEntity<>(fitxerService.getFitxerByTipus(fitxer.getTipus()),HttpStatus.OK);

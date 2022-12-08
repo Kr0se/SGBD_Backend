@@ -32,10 +32,16 @@ public class FitxerUsuariController {
     @Autowired
     private FitxerService fitxerService;
 
-    @PostMapping(path = "/add")
-    public ResponseEntity<FitxerUsuari> afegirRelacio(@RequestBody RelacioDTO relacioDTO) throws IOException {
+    @PostMapping(path = "/add/{username}")
+    public ResponseEntity<User> afegirRelacio(@PathVariable("username") String username,@RequestBody RelacioDTO relacioDTO) throws IOException {
+        fitxerUsuariService.createFitxerUsuariCompartit(relacioDTO);
+        return new ResponseEntity<>(userService.getUserByUserName(username),HttpStatus.OK);
+    }
 
-        return new ResponseEntity<>(fitxerUsuariService.createFitxerUsuariCompartit(relacioDTO),HttpStatus.OK);
+    @PostMapping(path = "/delete/{username}")
+    public ResponseEntity<User> borrarRelacio(@PathVariable("username") String username,@RequestBody RelacioDTO relacioDTO) throws IOException {
+        fitxerUsuariService.deleteFitxerUsuariCompartit(relacioDTO);
+        return new ResponseEntity<>(userService.getUserByUserName(username),HttpStatus.OK);
     }
 
     @GetMapping()
@@ -44,6 +50,12 @@ public class FitxerUsuariController {
     @PostMapping("/usuari")
     public ResponseEntity<Collection<FitxerBD>> getFitxersUsuarisByUsuari(@RequestBody UserAuthDTO user) throws IOException {
         return new ResponseEntity<>(fitxerUsuariService.getListFitxerUsuariByUsuari(user), HttpStatus.OK);
+    }
+
+    @PostMapping("/compartits")
+    public ResponseEntity<Collection<FitxerBD>> getFitxersCompartits(@RequestBody UserAuthDTO user) throws IOException {
+
+        return new ResponseEntity<>(fitxerUsuariService.getListFitxerUsuariCompartitsByUsuari(user),HttpStatus.OK);
     }
 
     @GetMapping("/fitxer")

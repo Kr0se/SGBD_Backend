@@ -45,16 +45,28 @@ public class FitxerUsuariService {
 
     public FitxerUsuari createFitxerUsuariCompartit(RelacioDTO relacio){
 
-        User user = userService.getUser(relacio.getUserId());
+        User user = userService.getUserByUserName(relacio.getUsername());
         Fitxer fitxer = fitxerService.getFitxer(relacio.getFitxerId());
 
-        FitxerUsuari fu = new FitxerUsuari(relacio.getFitxerId(), relacio.getUserId(), false);
+        FitxerUsuari fu = new FitxerUsuari(relacio.getFitxerId(), user.getId(), false);
         fitxerUsuariRepository.save(fu);
 
         fitxerService.addFitxerUser(fitxer,fu);
         userService.addFitxerUser(user, fu);
 
         return fu;
+    }
+
+    public void deleteFitxerUsuariCompartit(RelacioDTO relacio) {
+        User user = userService.getUserByUserName(relacio.getUsername());
+        Fitxer fitxer = fitxerService.getFitxer(relacio.getFitxerId());
+
+        Optional<FitxerUsuari> fu = fitxerUsuariRepository.findByFitxerIdAndUserId(relacio.getFitxerId(),user.getId());
+        if (fu.isEmpty()) {
+            throw new RuntimeException("Aquesta relacio no existeix");
+        }
+        userService.deleteFitxerUsuari(fu.get());
+        fitxerUsuariRepository.delete(fu.get());
     }
 
     public Boolean esPropietari(String fitxerId, String userId){
@@ -77,6 +89,21 @@ public class FitxerUsuariService {
         Collection<FitxerUsuari> fus = listFU.get();
         for(FitxerUsuari fu:fus){
             toReturn.add(fitxerService.getFitxerBD(fu.getFitxerId()));
+        }
+        return toReturn;
+    }
+
+    public Collection<FitxerBD> getListFitxerUsuariCompartitsByUsuari(UserAuthDTO userDTO) throws IOException {
+
+        Collection<FitxerBD> toReturn = new ArrayList<>();
+        User user = userService.getUserByUserName(userDTO.getUsername());
+        Optional<Collection<FitxerUsuari>> listFU = fitxerUsuariRepository.findByuserId(user.getId());
+        if (listFU.isEmpty())
+            throw new RuntimeException("Aquest usuari no te cap fitxer");
+        Collection<FitxerUsuari> fus = listFU.get();
+        for(FitxerUsuari fu:fus){
+            if (!fu.getEsPropietari())
+                toReturn.add(fitxerService.getFitxerBD(fu.getFitxerId()));
         }
         return toReturn;
     }

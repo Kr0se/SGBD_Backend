@@ -3,6 +3,7 @@ package com.online.files.online.files.DTO;
 public class RelacioDTO {
     private String id;
     private String fitxerId;
+    private String username;
     private String userId;
     private Boolean esPropietari;
 
@@ -10,6 +11,8 @@ public class RelacioDTO {
     public void setId(String id){ this.id = id;}
     public String getFitxerId(){ return fitxerId;}
     public void setFitxerId(String fitxerId){ this.fitxerId = fitxerId;}
+    public String getUsername(){return username;}
+    public void setUsername(String username){this.username = username;}
     public String getUserId(){ return userId;}
     public void setUserId(String userId){ this.userId = userId;}
     public Boolean getEsPropietari(){ return esPropietari;}
