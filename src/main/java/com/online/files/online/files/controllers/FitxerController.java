@@ -115,8 +115,8 @@ public class FitxerController
             if (fu.getEsPropietari())
                 user = userService.getUser(fu.getUserId());
         }
-        fitxerService.renameFitxer(id,file.getNouNom());
         userService.renameFile(user.getUsername(),ff,file.getNouNom());
+        fitxerService.renameFitxer(id,file.getNouNom());
 
         return new ResponseEntity<>(userRepository.findByUsername(user.getUsername()),HttpStatus.OK);
     }
