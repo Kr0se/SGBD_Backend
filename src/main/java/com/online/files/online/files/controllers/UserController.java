@@ -42,6 +42,14 @@ public class UserController {
         return userService.getUserByUserName(username);
     }
 
+    /*
+     * Retorna tots els usuaris que el seu username comença per 'username'
+     */
+    @GetMapping("/getAllUsersByUsername")
+    public List<User> getAllUsersByUsername(@RequestParam("username") String username){
+        return userService.getAllUsersByUsername(username);
+    }
+
     @PostMapping("/register")
     public ResponseEntity<Boolean> register(@RequestBody UserAuthDTO user){
 

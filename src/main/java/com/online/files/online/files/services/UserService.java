@@ -11,6 +11,7 @@ import com.online.files.online.files.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -277,4 +278,15 @@ public class UserService {
         this.userRepository.save(u);
         return true;
     }
+
+    public List<User> getAllUsersByUsername(String username) {
+        List<User> list = new ArrayList<>();
+        for(User u : this.userRepository.findAll()){
+            if(u.getUsername().startsWith(username)){
+                list.add(u);
+            }
+        }
+        return list;
+    }
+    
 }
