@@ -38,16 +38,6 @@ public class FitxerBDController {
         return "redirect:/videos/" + idNou;
     }
 
-    @GetMapping("/download")
-    public ResponseEntity<ByteArrayResource> download(@RequestParam String id) throws IOException {
-        FitxerBD fitxerBD = fitxerBDService.getFitxerBD(id);
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(fitxerBD.getType() ))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fitxerBD.getTitle() + "\"")
-                .body(new ByteArrayResource(IOUtils.toByteArray(fitxerBD.getStream())));
-    }
-
     @GetMapping("/{id}")
     public String getFitxerBD(@PathVariable String id, Model model) throws Exception {
         FitxerBD fitxerBD = fitxerBDService.getFitxerBD(id);
