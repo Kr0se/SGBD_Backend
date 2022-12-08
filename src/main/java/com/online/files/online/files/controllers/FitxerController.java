@@ -30,6 +30,7 @@ import com.online.files.online.files.models.User;
 import com.online.files.online.files.models.fitxers.Fitxer;
 import com.online.files.online.files.models.fitxers.FitxerBD;
 import com.online.files.online.files.repositories.FitxerRepository;
+import com.online.files.online.files.repositories.UserRepository;
 import com.online.files.online.files.services.FitxerBDService;
 import com.online.files.online.files.services.FitxerService;
 import com.online.files.online.files.services.FitxerUsuariService;
@@ -41,7 +42,7 @@ public class FitxerController
 {
 
     @Autowired
-    private FitxerRepository fitxerRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private FitxerBDService fitxerBDService;
@@ -89,7 +90,7 @@ public class FitxerController
                 .body(new ByteArrayResource(IOUtils.toByteArray(fitxerBD.getStream())));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public ResponseEntity<User> deleteFitxer(@PathVariable("id") String id, @RequestBody FitxerDTO file){
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByFitxer(id);
         User user = fitxerUsuariService.deleteFitxerUsuariOfUser(fus);
@@ -98,7 +99,7 @@ public class FitxerController
         ff.setFitxerID(id);
         userService.removeFile(user.getUsername(), ff);
         fitxerService.deleteFitxer(id);
-        return new ResponseEntity<>(user,HttpStatus.OK);
+        return new ResponseEntity<>(userRepository.findByUsername(user.getUsername()), HttpStatus.OK);
     }
 
     @PostMapping("/rename/{id}")
