@@ -45,11 +45,6 @@ public class FitxerBDService {
         return fitxerBD;
     }
 
-    public String updateFitxerBD(String id, MultipartFile file) throws IOException {
-       this.deleteFitxerBD(id);
-       return this.createFitxerBD(file);
-    }
-
     public String renameFitxerBD(String id, String nouNom) throws IOException {
         FitxerBD fitxerBD = this.getFitxerBD(id);
         ObjectId idNou = gridFsTemplate.store(

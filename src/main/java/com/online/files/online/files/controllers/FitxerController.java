@@ -65,8 +65,7 @@ public class FitxerController
             @RequestParam("file") MultipartFile file, Model model) throws IOException {
 
         String id = fitxerBDService.createFitxerBD(file);
-        Date d = fitxerBDService.getUploadDate(id);
-        Fitxer f = fitxerService.createFitxer(file.getOriginalFilename(),file.getContentType().split("/")[0],d,id);
+        Fitxer f = fitxerService.createFitxer(file.getOriginalFilename(),file.getContentType().split("/")[0],fitxerBDService.getUploadDate(id),id);
         fitxerUsuariService.createFitxerUsuari(f.getId(),username,true);
         FileFolderDTO ff = new FileFolderDTO();
         ff.setPath(path);
@@ -135,8 +134,9 @@ public class FitxerController
             if (fu.getEsPropietari())
                 user = userService.getUser(fu.getUserId());
         }
-        Fitxer fitxer = fitxerService.updateFitxer(id,file); // retorna el fitxer que volem canviar actualitzar
+        Fitxer fitxer = fitxerService.copyFitxer(file); // retorna el fitxer que volem canviar actualitzar
         userService.updateFile(user.getUsername(),ff,fitxer); //-> fer metode com el rename q actualitzi el fitxer sencer
+        fitxerService.updateFitxer(id,fitxer);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 

@@ -266,11 +266,14 @@ public class UserService {
             System.out.println(e.getMessage());
             return false;
         }
-        //f.get().setNom(nomFitxer); fitxer vell
+        f.get().setNom(fitxerActualitzat.getNom());
+        f.get().setTipus(fitxerActualitzat.getTipus());
+        f.get().setDataPujada(fitxerActualitzat.getDataPujada());
+        f.get().setFitxerBDId(fitxerActualitzat.getFitxerDBId());
         //Intentem afegir el fitxer a la carpeta a l'estructura de l'usuari
         //Retornem l'usuari amb el fitxer inserit a la carpeta
         try {
-            u = u.addFile(itemsPath, fitxerActualitzat);
+            u = u.addFile(itemsPath, f.get());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;

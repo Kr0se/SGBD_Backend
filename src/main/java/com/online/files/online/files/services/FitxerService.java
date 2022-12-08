@@ -74,15 +74,21 @@ public class FitxerService
         fitxerRepository.save(fitxer);
     }
 
-    public Fitxer updateFitxer(String id, MultipartFile file) throws IOException {
-        Fitxer fitxer = this.getFitxer(id);
-        String idBDNou = fitxerBDService.updateFitxerBD(fitxer.getFitxerDBId(),file);
-        fitxer.setNom(file.getOriginalFilename());
-        fitxer.setTipus(file.getContentType().split("/")[0]);
-        fitxer.setDataPujada(fitxerBDService.getUploadDate(idBDNou));
-        fitxer.setFitxerBDId(idBDNou);
-        fitxerRepository.save(fitxer);
+    public Fitxer copyFitxer( MultipartFile file) throws IOException {
+        //Fitxer fitxer = this.getFitxer(id);
+        String idBDNou = fitxerBDService.createFitxerBD(file);
+        Fitxer fitxer = new Fitxer(file.getOriginalFilename(),file.getContentType().split("/")[0],fitxerBDService.getUploadDate(idBDNou),idBDNou);
+        return fitxer;
+    }
 
+    public Fitxer updateFitxer(String id, Fitxer copy){
+        Fitxer fitxer = this.getFitxer(id);
+        fitxerBDService.deleteFitxerBD(fitxer.getFitxerDBId());
+        fitxer.setNom(copy.getNom());
+        fitxer.setTipus(copy.getTipus());
+        fitxer.setDataPujada(copy.getDataPujada());
+        fitxer.setFitxerBDId(copy.getFitxerDBId());
+        fitxerRepository.save(fitxer);
         return fitxer;
     }
 
