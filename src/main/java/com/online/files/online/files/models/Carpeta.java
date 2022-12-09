@@ -84,11 +84,7 @@ public class Carpeta {
   public List<Carpeta> getSubCarpetes() {
     return this.subCarpetes;
   }
-
-  public List<Fitxer> getVideos() {
-    return fitxers;
-  }
-
+  
   public List<Fitxer> getFiles() {
     return fitxers;
   }
