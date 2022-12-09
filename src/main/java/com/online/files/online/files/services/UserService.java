@@ -7,6 +7,7 @@ import com.online.files.online.files.models.FitxerUsuari;
 import com.online.files.online.files.models.User;
 import com.online.files.online.files.models.fitxers.Fitxer;
 import com.online.files.online.files.repositories.FitxerRepository;
+import com.online.files.online.files.repositories.FitxerUsuariRepository;
 import com.online.files.online.files.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class UserService {
 
     @Autowired
     private FitxerRepository fitxerRepository;
+
+	@Autowired
+	private FitxerUsuariRepository fitxerUsuariRepository;
 
     public Collection<User> getUsers(){
         return userRepository.findAll();
@@ -290,6 +294,35 @@ public class UserService {
             }
         }
         return list;
+    }
+
+	public boolean removeUser(String username){
+        User u = userRepository.findByUsername(username);
+        if(u == null){
+            throw new RuntimeException("No existeix un usuari amb aquest username");
+        }
+
+        for(FitxerUsuari fu : u.getFitxerUsuariList()){
+			Optional<Fitxer> f = fitxerRepository.findById(fu.getFitxerId());
+            if (f.isEmpty()){return false;}
+
+            if(fu.getEsPropietari()){
+				Optional<Collection<FitxerUsuari>> listFU = fitxerUsuariRepository.findByfitxerId(f.get().getId());
+		        if (listFU.isEmpty()){throw new RuntimeException("Aquest fitxer no es de cap usuari");}
+		        for(FitxerUsuari ful: listFU.get()){
+			       fitxerUsuariRepository.delete(ful);
+		        }
+                fitxerRepository.delete(f.get());
+            }
+			else{
+				Optional<FitxerUsuari> fborrar = fitxerUsuariRepository.findByFitxerIdAndUserId(f.get().getId(), u.getId());
+				if (f.isEmpty()){return false;}
+				else {fitxerUsuariRepository.delete(fborrar.get());}
+				f.get().removeFitxerUsuari(fu);
+			}
+        }
+        this.userRepository.delete(u);
+        return true;
     }
     
 }

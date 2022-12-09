@@ -70,6 +70,10 @@ public class Fitxer
         fitxerUsuariList.add(fu);
     }
 
+	public void removeFitxerUsuari(FitxerUsuari fu){
+		fitxerUsuariList.remove(fu);
+	}
+
     @Override
     public String toString(){
         return "Fitxer [id= " + id + ", nom= " + nom + ", Fitxer= " + fitxerBDId + "]";

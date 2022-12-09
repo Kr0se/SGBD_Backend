@@ -205,6 +205,8 @@ public class User {
     return this.mainCarpeta;
   }
 
+  public List<FitxerUsuari> getFitxerUsuariList(){return fitxerUsuariList;}
+
   public void addFitxerUsuari(FitxerUsuari fu){
     fitxerUsuariList.add(fu);
   }

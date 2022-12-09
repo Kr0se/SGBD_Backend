@@ -62,6 +62,12 @@ public class UserController {
         return new ResponseEntity<>(this.userService.login(user),HttpStatus.OK);
     }
 
+	@DeleteMapping("/{username}/deleteUsername")
+    public ResponseEntity<Boolean> deleteUser(@PathVariable("username") String username){
+
+        return new ResponseEntity<>(this.userService.removeUser(username),HttpStatus.OK);
+    }
+
     /**
      * 
      * @param username usuari de la base de dades (clau primaria de user)
