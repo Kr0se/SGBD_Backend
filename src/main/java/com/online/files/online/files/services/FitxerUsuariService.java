@@ -78,41 +78,43 @@ public class FitxerUsuariService {
         return fu.get().getEsPropietari();
     }
 
-
-    public Collection<FitxerBD> getListFitxerUsuariByUsuari(UserAuthDTO userDTO) throws IOException {
-
-        Collection<FitxerBD> toReturn = new ArrayList<>();
-        User user = userService.getUserByUserName(userDTO.getUsername());
+    public Collection<FitxerUsuari> getListFitxerUsuariByUsuari(String username){
+        User user = userService.getUserByUserName(username);
         Optional<Collection<FitxerUsuari>> listFU = fitxerUsuariRepository.findByuserId(user.getId());
         if (listFU.isEmpty())
             throw new RuntimeException("Aquest usuari no te cap fitxer");
-        Collection<FitxerUsuari> fus = listFU.get();
-        for(FitxerUsuari fu:fus){
-            toReturn.add(fitxerService.getFitxerBD(fu.getFitxerId()));
-        }
-        return toReturn;
+       return listFU.get();
     }
 
-    public Collection<FitxerBD> getListFitxerUsuariCompartitsByUsuari(UserAuthDTO userDTO) throws IOException {
-
-        Collection<FitxerBD> toReturn = new ArrayList<>();
-        User user = userService.getUserByUserName(userDTO.getUsername());
-        Optional<Collection<FitxerUsuari>> listFU = fitxerUsuariRepository.findByuserId(user.getId());
-        if (listFU.isEmpty())
-            throw new RuntimeException("Aquest usuari no te cap fitxer");
-        Collection<FitxerUsuari> fus = listFU.get();
-        for(FitxerUsuari fu:fus){
-            if (!fu.getEsPropietari())
-                toReturn.add(fitxerService.getFitxerBD(fu.getFitxerId()));
-        }
-        return toReturn;
-    }
 
     public Collection<FitxerUsuari> getListFitxerUsuariByFitxer(String fitxerId){
         Optional<Collection<FitxerUsuari>> listFU = fitxerUsuariRepository.findByfitxerId(fitxerId);
         if (listFU.isEmpty())
             throw new RuntimeException("Aquest fitxer no es de cap usuari");
         return listFU.get();
+    }
+
+    public Collection<FitxerBD> getListFitxerBDByUsuari(String username) throws IOException {
+
+        Collection<FitxerBD> toReturn = new ArrayList<>();
+        User user = userService.getUserByUserName(username);
+        Collection<FitxerUsuari> fus = this.getListFitxerUsuariByUsuari(user.getId());
+        for(FitxerUsuari fu:fus){
+            toReturn.add(fitxerService.getFitxerBD(fu.getFitxerId()));
+        }
+        return toReturn;
+    }
+
+    public Collection<FitxerBD> getListFitxerBDCompartitsByUsuari(UserAuthDTO userDTO) throws IOException {
+
+        Collection<FitxerBD> toReturn = new ArrayList<>();
+        User user = userService.getUserByUserName(userDTO.getUsername());
+        Collection<FitxerUsuari> fus = this.getListFitxerUsuariByUsuari(user.getId());
+        for(FitxerUsuari fu:fus){
+            if (!fu.getEsPropietari())
+                toReturn.add(fitxerService.getFitxerBD(fu.getFitxerId()));
+        }
+        return toReturn;
     }
 
     public User deleteFitxerUsuariOfUser(Collection<FitxerUsuari> fus){

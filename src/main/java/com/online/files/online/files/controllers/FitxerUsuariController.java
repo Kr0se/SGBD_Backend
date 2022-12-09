@@ -49,13 +49,13 @@ public class FitxerUsuariController {
 
     @PostMapping("/usuari")
     public ResponseEntity<Collection<FitxerBD>> getFitxersUsuarisByUsuari(@RequestBody UserAuthDTO user) throws IOException {
-        return new ResponseEntity<>(fitxerUsuariService.getListFitxerUsuariByUsuari(user), HttpStatus.OK);
+        return new ResponseEntity<>(fitxerUsuariService.getListFitxerBDByUsuari(user.getUsername()), HttpStatus.OK);
     }
 
     @PostMapping("/compartits")
     public ResponseEntity<Collection<FitxerBD>> getFitxersCompartits(@RequestBody UserAuthDTO user) throws IOException {
 
-        return new ResponseEntity<>(fitxerUsuariService.getListFitxerUsuariCompartitsByUsuari(user),HttpStatus.OK);
+        return new ResponseEntity<>(fitxerUsuariService.getListFitxerBDCompartitsByUsuari(user),HttpStatus.OK);
     }
 
     @GetMapping("/fitxer")

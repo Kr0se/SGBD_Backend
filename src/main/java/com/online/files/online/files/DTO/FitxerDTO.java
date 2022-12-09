@@ -8,6 +8,7 @@ public class FitxerDTO {
     private String nouNom;
     private String tipus;
     private Date dataPujada;
+    private Date dataCerca2;
     private String fitxerBDId;
     private String path;
 
@@ -21,6 +22,8 @@ public class FitxerDTO {
     public void setTipus(String tipus){this.tipus = tipus;}
     public Date getDataPujada(){return dataPujada;}
     public void setDataPujada(Date dataPujada){this.dataPujada = dataPujada;}
+    public Date getDataCerca2(){return dataCerca2;}
+    public void setDataCerca2(Date dataCerca2){this.dataCerca2 = dataCerca2;}
     public String getFitxerBDId(){return fitxerBDId;}
     public void setFitxerBDId(String fitxerBDId){this.fitxerBDId = fitxerBDId;}
     public String getPath() {

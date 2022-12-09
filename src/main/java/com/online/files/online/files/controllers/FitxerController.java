@@ -140,30 +140,45 @@ public class FitxerController
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
-    @PostMapping("/tipus")
-    public ResponseEntity<Collection<FitxerBD>> getFitxerByTipus(@RequestBody FitxerDTO fitxer) throws IOException {
-        return new ResponseEntity<>(fitxerService.getFitxerByTipus(fitxer.getTipus()),HttpStatus.OK);
+    @PostMapping("/{username}/tipus")
+    public ResponseEntity<Collection<FitxerBD>> getFitxerByTipus(@PathVariable("username") String username, @RequestBody FitxerDTO fitxer) throws IOException {
+        Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
+        return new ResponseEntity<>(fitxerService.getFitxerByTipus(fus,fitxer.getTipus()),HttpStatus.OK);
     }
 
-    @GetMapping("/data")
-    public Collection<Fitxer> getFitxerByData(@RequestParam("data") Date data) {
-
-        return fitxerService.getFitxerByDataPujada(data);
+    @PostMapping("/{username}/data")
+    public ResponseEntity<Collection<FitxerBD>> getFitxerByData(@PathVariable("username") String username,@RequestBody FitxerDTO fitxer) throws IOException {
+        Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
+        return new ResponseEntity<>(fitxerService.getFitxerByDataPujada(fus,fitxer.getDataPujada()),HttpStatus.OK);
     }
-    @GetMapping("/databetween")
-    public Collection<Fitxer> getFitxerBetweenData(@RequestParam("data1") Date data1, @RequestParam("data1") Date data2) {
 
-        return fitxerService.getFitxerByDataPujadaBetween(data1,data2);
+    @PostMapping("/{username}/databetween")
+    public ResponseEntity<Collection<FitxerBD>> getFitxerBetweenData(@PathVariable("username") String username, @RequestBody FitxerDTO fitxer) throws IOException {
+        Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
+        return new ResponseEntity<>(fitxerService.getFitxerByDataPujadaBetween(fus,fitxer.getDataPujada(),fitxer.getDataCerca2()),HttpStatus.OK);
     }
-    @GetMapping("/nomstarts")
-    public Collection<Fitxer> getFitxerByNomStarts(@RequestParam("nom") String nom) {
 
-        return fitxerService.getFitxerByNomStartsWith(nom);
+    @PostMapping("/{username}/afterdata")
+    public ResponseEntity<Collection<FitxerBD>> getFitxerByDataAfter(@PathVariable("username") String username,@RequestBody FitxerDTO fitxer) throws IOException {
+        Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
+        return new ResponseEntity<>(fitxerService.getFitxerByDataPujadaAfter(fus,fitxer.getDataPujada()),HttpStatus.OK);
     }
-    @GetMapping("/nomends")
-    public Collection<Fitxer> getFitxerByNomEnds(@RequestParam("nom") String nom) {
 
-        return fitxerService.getFitxerByNomEndsWith(nom);
+    @PostMapping("/{username}/beforedata")
+    public ResponseEntity<Collection<FitxerBD>> getFitxerByDataBefore(@PathVariable("username") String username,@RequestBody FitxerDTO fitxer) throws IOException {
+        Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
+        return new ResponseEntity<>(fitxerService.getFitxerByDataPujadaBefore(fus,fitxer.getDataPujada()),HttpStatus.OK);
+    }
+
+    @PostMapping("/{username}/nomstarts")
+    public ResponseEntity<Collection<FitxerBD>> getFitxerByNomStarts(@PathVariable("username") String username,@RequestBody FitxerDTO fitxer) throws IOException {
+        Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
+        return new ResponseEntity<>(fitxerService.getFitxerByNomStartsWith(fus,fitxer.getNom()),HttpStatus.OK);
+    }
+    @PostMapping("/{username}/nomends")
+    public ResponseEntity<Collection<FitxerBD>> getFitxerByNomEnds(@PathVariable("username") String username,@RequestBody FitxerDTO fitxer) throws IOException {
+        Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
+        return new ResponseEntity<>(fitxerService.getFitxerByNomEndsWith(fus,fitxer.getNom()),HttpStatus.OK);
     }
 
 }
