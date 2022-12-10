@@ -47,15 +47,15 @@ public class FitxerUsuariController {
     @GetMapping()
     public Collection<FitxerUsuari> getFitxersUsuaris(){ return fitxerUsuariService.getFitxersUsuaris();}
 
-    @PostMapping("/usuari")
-    public ResponseEntity<Collection<FitxerBD>> getFitxersUsuarisByUsuari(@RequestBody UserAuthDTO user) throws IOException {
-        return new ResponseEntity<>(fitxerUsuariService.getListFitxerBDByUsuari(user.getUsername()), HttpStatus.OK);
+    @PostMapping("/{username}")
+    public ResponseEntity<Collection<FitxerBD>> getFitxersUsuarisByUsuari(@PathVariable("username") String username) throws IOException {
+        return new ResponseEntity<>(fitxerUsuariService.getListFitxerBDByUsuari(username), HttpStatus.OK);
     }
 
-    @PostMapping("/compartits")
-    public ResponseEntity<Collection<FitxerBD>> getFitxersCompartits(@RequestBody UserAuthDTO user) throws IOException {
+    @PostMapping("/{username}/compartits")
+    public ResponseEntity<Collection<FitxerBD>> getFitxersCompartits(@PathVariable("username") String username) throws IOException {
 
-        return new ResponseEntity<>(fitxerUsuariService.getListFitxerBDCompartitsByUsuari(user),HttpStatus.OK);
+        return new ResponseEntity<>(fitxerUsuariService.getListFitxerBDCompartitsByUsuari(username),HttpStatus.OK);
     }
 
     @GetMapping("/fitxer")

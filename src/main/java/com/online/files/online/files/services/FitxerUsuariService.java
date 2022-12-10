@@ -97,19 +97,17 @@ public class FitxerUsuariService {
     public Collection<FitxerBD> getListFitxerBDByUsuari(String username) throws IOException {
 
         Collection<FitxerBD> toReturn = new ArrayList<>();
-        User user = userService.getUserByUserName(username);
-        Collection<FitxerUsuari> fus = this.getListFitxerUsuariByUsuari(user.getId());
+        Collection<FitxerUsuari> fus = this.getListFitxerUsuariByUsuari(username);
         for(FitxerUsuari fu:fus){
             toReturn.add(fitxerService.getFitxerBD(fu.getFitxerId()));
         }
         return toReturn;
     }
 
-    public Collection<FitxerBD> getListFitxerBDCompartitsByUsuari(UserAuthDTO userDTO) throws IOException {
+    public Collection<FitxerBD> getListFitxerBDCompartitsByUsuari(String username) throws IOException {
 
         Collection<FitxerBD> toReturn = new ArrayList<>();
-        User user = userService.getUserByUserName(userDTO.getUsername());
-        Collection<FitxerUsuari> fus = this.getListFitxerUsuariByUsuari(user.getId());
+        Collection<FitxerUsuari> fus = this.getListFitxerUsuariByUsuari(username);
         for(FitxerUsuari fu:fus){
             if (!fu.getEsPropietari())
                 toReturn.add(fitxerService.getFitxerBD(fu.getFitxerId()));
