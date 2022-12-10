@@ -43,11 +43,11 @@ public class UserController {
     }
 
     /*
-     * Retorna tots els usuaris que el seu username comença per 'username'
+     * Retorna tots els usuaris que el seu username comença per 'query', excepte username
      */
-    @GetMapping("/getAllUsersByUsername")
-    public List<User> getAllUsersByUsername(@RequestParam("username") String username){
-        return userService.getAllUsersByUsername(username);
+    @GetMapping("/{username}/getAllUsersByUsername")
+    public List<User> getAllUsersByUsername(@PathVariable("username") String username, @RequestParam("query") String query){
+        return userService.getAllUsersByUsername(username, query);
     }
 
     @PostMapping("/register")

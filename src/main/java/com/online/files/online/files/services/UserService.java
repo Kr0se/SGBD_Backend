@@ -286,11 +286,13 @@ public class UserService {
         return true;
     }
 
-    public List<User> getAllUsersByUsername(String username) {
+    public List<User> getAllUsersByUsername(String username, String query) {
         List<User> list = new ArrayList<>();
-        for(User u : this.userRepository.findAll()){
-            if(u.getUsername().startsWith(username)){
-                list.add(u);
+        if(query.length() > 0){
+            for(User u : this.userRepository.findAll()){
+                if(u.getUsername().startsWith(query) && !u.getUsername().equals(username)){
+                    list.add(u);
+                }
             }
         }
         return list;
