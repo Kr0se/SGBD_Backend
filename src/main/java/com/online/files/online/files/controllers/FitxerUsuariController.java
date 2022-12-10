@@ -47,13 +47,13 @@ public class FitxerUsuariController {
     @GetMapping()
     public Collection<FitxerUsuari> getFitxersUsuaris(){ return fitxerUsuariService.getFitxersUsuaris();}
 
-    @PostMapping("/{username}")
-    public ResponseEntity<Collection<FitxerBD>> getFitxersUsuarisByUsuari(@PathVariable("username") String username) throws IOException {
+    @GetMapping("/{username}")
+    public ResponseEntity<Collection<Fitxer>> getFitxersUsuarisByUsuari(@PathVariable("username") String username) throws IOException {
         return new ResponseEntity<>(fitxerUsuariService.getListFitxerBDByUsuari(username), HttpStatus.OK);
     }
 
-    @PostMapping("/{username}/compartits")
-    public ResponseEntity<Collection<FitxerBD>> getFitxersCompartits(@PathVariable("username") String username) throws IOException {
+    @GetMapping("/{username}/compartits")
+    public ResponseEntity<Collection<Fitxer>> getFitxersCompartits(@PathVariable("username") String username) throws IOException {
 
         return new ResponseEntity<>(fitxerUsuariService.getListFitxerBDCompartitsByUsuari(username),HttpStatus.OK);
     }
