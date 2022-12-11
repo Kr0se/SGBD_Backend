@@ -12,10 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class FitxerService
@@ -156,7 +153,7 @@ public class FitxerService
     }
 
     public Collection<Fitxer> getFitxerByNomStartsWith(Collection<FitxerUsuari> fus, String nom) {
-        Collection<Fitxer> fitxers = new ArrayList<>();
+        List<Fitxer> fitxers = new ArrayList<Fitxer>();
         if(!nom.isEmpty()){
             for(FitxerUsuari fu : fus){
                 Fitxer f = this.getFitxer(fu.getFitxerId());
@@ -164,11 +161,12 @@ public class FitxerService
                     fitxers.add(f);
             }
         }
+        Collections.sort(fitxers, Comparator.comparing(Fitxer::getNom));
         return fitxers;
     }
 
     public Collection<Fitxer> getFitxerByNomEndsWith(Collection<FitxerUsuari> fus, String nom) {
-        Collection<Fitxer> fitxers = new ArrayList<>();
+        List<Fitxer> fitxers = new ArrayList<>();
         if(!nom.isEmpty()){
             for (FitxerUsuari fu : fus) {
                 Fitxer f = this.getFitxer(fu.getFitxerId());
@@ -176,6 +174,7 @@ public class FitxerService
                     fitxers.add(f);
             }
         }
+        Collections.sort(fitxers, Comparator.comparing(Fitxer::getNom));
         return fitxers;
     }
 }
