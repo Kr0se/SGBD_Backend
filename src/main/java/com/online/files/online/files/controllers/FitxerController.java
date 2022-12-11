@@ -141,7 +141,7 @@ public class FitxerController
     }
 
     @GetMapping("/{username}/tipus")
-    public ResponseEntity<Collection<Fitxer>> getFitxerByTipus(@PathVariable("username") String username, @RequestParam String tipus) throws IOException {
+    public ResponseEntity<Collection<Fitxer>> getFitxerByTipus(@PathVariable("username") String username, @RequestParam("tipus") String tipus) throws IOException {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
         return new ResponseEntity<>(fitxerService.getFitxerByTipus(fus,tipus),HttpStatus.OK);
     }
@@ -171,12 +171,12 @@ public class FitxerController
     }*/
 
     @GetMapping("/{username}/nomstarts")
-    public ResponseEntity<Collection<Fitxer>> getFitxerByNomStarts(@PathVariable("username") String username,@RequestParam String nom) throws IOException {
+    public ResponseEntity<Collection<Fitxer>> getFitxerByNomStarts(@PathVariable("username") String username,@RequestParam("nom") String nom) throws IOException {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
         return new ResponseEntity<>(fitxerService.getFitxerByNomStartsWith(fus,nom),HttpStatus.OK);
     }
     @GetMapping("/{username}/nomends")
-    public ResponseEntity<Collection<Fitxer>> getFitxerByNomEnds(@PathVariable("username") String username,@RequestParam String nom) throws IOException {
+    public ResponseEntity<Collection<Fitxer>> getFitxerByNomEnds(@PathVariable("username") String username,@RequestParam("nom") String nom) throws IOException {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
         return new ResponseEntity<>(fitxerService.getFitxerByNomEndsWith(fus,nom),HttpStatus.OK);
     }
