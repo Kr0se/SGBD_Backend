@@ -157,20 +157,24 @@ public class FitxerService
 
     public Collection<Fitxer> getFitxerByNomStartsWith(Collection<FitxerUsuari> fus, String nom) {
         Collection<Fitxer> fitxers = new ArrayList<>();
-        for(FitxerUsuari fu : fus){
-            Fitxer f = this.getFitxer(fu.getFitxerId());
-            if(f.getNom().startsWith(nom))
-                fitxers.add(f);
+        if(!nom.isEmpty()){
+            for(FitxerUsuari fu : fus){
+                Fitxer f = this.getFitxer(fu.getFitxerId());
+                if(f.getNom().startsWith(nom))
+                    fitxers.add(f);
+            }
         }
         return fitxers;
     }
 
     public Collection<Fitxer> getFitxerByNomEndsWith(Collection<FitxerUsuari> fus, String nom) {
         Collection<Fitxer> fitxers = new ArrayList<>();
-        for(FitxerUsuari fu : fus){
-            Fitxer f = this.getFitxer(fu.getFitxerId());
-            if(f.getNom().endsWith(nom))
-                fitxers.add(f);
+        if(!nom.isEmpty()){
+            for (FitxerUsuari fu : fus) {
+                Fitxer f = this.getFitxer(fu.getFitxerId());
+                if (f.getNom().endsWith(nom))
+                    fitxers.add(f);
+            }
         }
         return fitxers;
     }
