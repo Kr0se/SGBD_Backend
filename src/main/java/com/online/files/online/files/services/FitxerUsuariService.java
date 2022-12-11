@@ -115,6 +115,16 @@ public class FitxerUsuariService {
         return toReturn;
     }
 
+    public Collection<User> getListUsersCompartits(String fitxerId){
+        Collection<User> toReturn = new ArrayList<>();
+        Collection<FitxerUsuari> fus = this.getListFitxerUsuariByFitxer(fitxerId);
+        for(FitxerUsuari fu:fus){
+            if (!fu.getEsPropietari())
+                toReturn.add(userService.getUser(fu.getUserId()));
+        }
+        return toReturn;
+    }
+
     public User deleteFitxerUsuariOfUser(Collection<FitxerUsuari> fus){
 
         User user = new User();

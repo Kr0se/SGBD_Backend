@@ -140,45 +140,45 @@ public class FitxerController
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
-    @PostMapping("/{username}/tipus")
-    public ResponseEntity<Collection<FitxerBD>> getFitxerByTipus(@PathVariable("username") String username, @RequestBody FitxerDTO fitxer) throws IOException {
+    @GetMapping("/{username}/tipus")
+    public ResponseEntity<Collection<Fitxer>> getFitxerByTipus(@PathVariable("username") String username, @RequestParam String tipus) throws IOException {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
-        return new ResponseEntity<>(fitxerService.getFitxerByTipus(fus,fitxer.getTipus()),HttpStatus.OK);
+        return new ResponseEntity<>(fitxerService.getFitxerByTipus(fus,tipus),HttpStatus.OK);
     }
 
-    @PostMapping("/{username}/data")
-    public ResponseEntity<Collection<FitxerBD>> getFitxerByData(@PathVariable("username") String username,@RequestBody FitxerDTO fitxer) throws IOException {
+    /*@GetMapping("/{username}/data")
+    public ResponseEntity<Collection<Fitxer>> getFitxerByData(@PathVariable("username") String username,@RequestParam FitxerDTO fitxer) throws IOException {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
         return new ResponseEntity<>(fitxerService.getFitxerByDataPujada(fus,fitxer.getDataPujada()),HttpStatus.OK);
     }
 
-    @PostMapping("/{username}/databetween")
-    public ResponseEntity<Collection<FitxerBD>> getFitxerBetweenData(@PathVariable("username") String username, @RequestBody FitxerDTO fitxer) throws IOException {
+    @GetMapping("/{username}/databetween")
+    public ResponseEntity<Collection<Fitxer>> getFitxerBetweenData(@PathVariable("username") String username, @RequestBody FitxerDTO fitxer) throws IOException {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
         return new ResponseEntity<>(fitxerService.getFitxerByDataPujadaBetween(fus,fitxer.getDataPujada(),fitxer.getDataCerca2()),HttpStatus.OK);
     }
 
-    @PostMapping("/{username}/afterdata")
-    public ResponseEntity<Collection<FitxerBD>> getFitxerByDataAfter(@PathVariable("username") String username,@RequestBody FitxerDTO fitxer) throws IOException {
+    @GetMapping("/{username}/afterdata")
+    public ResponseEntity<Collection<Fitxer>> getFitxerByDataAfter(@PathVariable("username") String username,@RequestBody FitxerDTO fitxer) throws IOException {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
         return new ResponseEntity<>(fitxerService.getFitxerByDataPujadaAfter(fus,fitxer.getDataPujada()),HttpStatus.OK);
     }
 
-    @PostMapping("/{username}/beforedata")
-    public ResponseEntity<Collection<FitxerBD>> getFitxerByDataBefore(@PathVariable("username") String username,@RequestBody FitxerDTO fitxer) throws IOException {
+    @GetMapping("/{username}/beforedata")
+    public ResponseEntity<Collection<Fitxer>> getFitxerByDataBefore(@PathVariable("username") String username,@RequestBody FitxerDTO fitxer) throws IOException {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
         return new ResponseEntity<>(fitxerService.getFitxerByDataPujadaBefore(fus,fitxer.getDataPujada()),HttpStatus.OK);
-    }
+    }*/
 
-    @PostMapping("/{username}/nomstarts")
-    public ResponseEntity<Collection<FitxerBD>> getFitxerByNomStarts(@PathVariable("username") String username,@RequestBody FitxerDTO fitxer) throws IOException {
+    @GetMapping("/{username}/nomstarts")
+    public ResponseEntity<Collection<Fitxer>> getFitxerByNomStarts(@PathVariable("username") String username,@RequestParam String nom) throws IOException {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
-        return new ResponseEntity<>(fitxerService.getFitxerByNomStartsWith(fus,fitxer.getNom()),HttpStatus.OK);
+        return new ResponseEntity<>(fitxerService.getFitxerByNomStartsWith(fus,nom),HttpStatus.OK);
     }
-    @PostMapping("/{username}/nomends")
-    public ResponseEntity<Collection<FitxerBD>> getFitxerByNomEnds(@PathVariable("username") String username,@RequestBody FitxerDTO fitxer) throws IOException {
+    @GetMapping("/{username}/nomends")
+    public ResponseEntity<Collection<Fitxer>> getFitxerByNomEnds(@PathVariable("username") String username,@RequestParam String nom) throws IOException {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
-        return new ResponseEntity<>(fitxerService.getFitxerByNomEndsWith(fus,fitxer.getNom()),HttpStatus.OK);
+        return new ResponseEntity<>(fitxerService.getFitxerByNomEndsWith(fus,nom),HttpStatus.OK);
     }
 
 }

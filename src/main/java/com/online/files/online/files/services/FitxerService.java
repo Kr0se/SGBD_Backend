@@ -98,73 +98,73 @@ public class FitxerService
         fitxerRepository.delete(f);
     }
 
-    public Collection<FitxerBD> getFitxerByTipus(Collection<FitxerUsuari> fus, String tipus) throws IOException {
-        Collection<FitxerBD> fitxerBDS = new ArrayList<>();
+    public Collection<Fitxer> getFitxerByTipus(Collection<FitxerUsuari> fus, String tipus) throws IOException {
+        Collection<Fitxer> fitxers = new ArrayList<>();
         for(FitxerUsuari fu : fus){
             Fitxer f = this.getFitxer(fu.getFitxerId());
             if(f.getTipus().equals(tipus))
-                fitxerBDS.add(fitxerBDService.getFitxerBD(f.getFitxerDBId()));
+                fitxers.add(f);
         }
-        return fitxerBDS;
+        return fitxers;
     }
 
-    public Collection<FitxerBD> getFitxerByDataPujada(Collection<FitxerUsuari> fus, Date data) throws IOException {
-        Collection<FitxerBD> fitxerBDS = new ArrayList<>();
+    public Collection<Fitxer> getFitxerByDataPujada(Collection<FitxerUsuari> fus, Date data) throws IOException {
+        Collection<Fitxer> fitxers = new ArrayList<>();
         for(FitxerUsuari fu : fus){
             Fitxer f = this.getFitxer(fu.getFitxerId());
             if(f.getDataPujada().equals(data))
-                fitxerBDS.add(fitxerBDService.getFitxerBD(f.getFitxerDBId()));
+                fitxers.add(f);
         }
-        return fitxerBDS;
+        return fitxers;
     }
 
-    public Collection<FitxerBD> getFitxerByDataPujadaBetween(Collection<FitxerUsuari> fus, Date data1, Date data2) throws IOException {
-        Collection<FitxerBD> fitxerBDS = new ArrayList<>();
+    public Collection<Fitxer> getFitxerByDataPujadaBetween(Collection<FitxerUsuari> fus, Date data1, Date data2) throws IOException {
+        Collection<Fitxer> fitxers = new ArrayList<>();
         for(FitxerUsuari fu : fus){
             Fitxer f = this.getFitxer(fu.getFitxerId());
             if(f.getDataPujada().after(data1) && f.getDataPujada().before(data2))
-                fitxerBDS.add(fitxerBDService.getFitxerBD(f.getFitxerDBId()));
+                fitxers.add(f);
         }
-        return fitxerBDS;
+        return fitxers;
     }
 
-    public Collection<FitxerBD> getFitxerByDataPujadaAfter(Collection<FitxerUsuari> fus, Date data) throws IOException {
-        Collection<FitxerBD> fitxerBDS = new ArrayList<>();
+    public Collection<Fitxer> getFitxerByDataPujadaAfter(Collection<FitxerUsuari> fus, Date data) throws IOException {
+        Collection<Fitxer> fitxers = new ArrayList<>();
         for(FitxerUsuari fu : fus){
             Fitxer f = this.getFitxer(fu.getFitxerId());
             if(f.getDataPujada().after(data))
-                fitxerBDS.add(fitxerBDService.getFitxerBD(f.getFitxerDBId()));
+                fitxers.add(f);
         }
-        return fitxerBDS;
+        return fitxers;
     }
 
-    public Collection<FitxerBD> getFitxerByDataPujadaBefore(Collection<FitxerUsuari> fus, Date data) throws IOException {
-        Collection<FitxerBD> fitxerBDS = new ArrayList<>();
+    public Collection<Fitxer> getFitxerByDataPujadaBefore(Collection<FitxerUsuari> fus, Date data) throws IOException {
+        Collection<Fitxer> fitxers = new ArrayList<>();
         for(FitxerUsuari fu : fus){
             Fitxer f = this.getFitxer(fu.getFitxerId());
             if(f.getDataPujada().before(data))
-                fitxerBDS.add(fitxerBDService.getFitxerBD(f.getFitxerDBId()));
+                fitxers.add(f);
         }
-        return fitxerBDS;
+        return fitxers;
     }
 
-    public Collection<FitxerBD> getFitxerByNomStartsWith(Collection<FitxerUsuari> fus, String nom) throws IOException {
-        Collection<FitxerBD> fitxerBDS = new ArrayList<>();
+    public Collection<Fitxer> getFitxerByNomStartsWith(Collection<FitxerUsuari> fus, String nom) throws IOException {
+        Collection<Fitxer> fitxers = new ArrayList<>();
         for(FitxerUsuari fu : fus){
             Fitxer f = this.getFitxer(fu.getFitxerId());
             if(f.getNom().startsWith(nom))
-                fitxerBDS.add(fitxerBDService.getFitxerBD(f.getFitxerDBId()));
+                fitxers.add(f);
         }
-        return fitxerBDS;
+        return fitxers;
     }
 
-    public Collection<FitxerBD> getFitxerByNomEndsWith(Collection<FitxerUsuari> fus, String nom) throws IOException {
-        Collection<FitxerBD> fitxerBDS = new ArrayList<>();
+    public Collection<Fitxer> getFitxerByNomEndsWith(Collection<FitxerUsuari> fus, String nom) throws IOException {
+        Collection<Fitxer> fitxers = new ArrayList<>();
         for(FitxerUsuari fu : fus){
             Fitxer f = this.getFitxer(fu.getFitxerId());
             if(f.getNom().endsWith(nom))
-                fitxerBDS.add(fitxerBDService.getFitxerBD(f.getFitxerDBId()));
+                fitxers.add(f);
         }
-        return fitxerBDS;
+        return fitxers;
     }
 }
