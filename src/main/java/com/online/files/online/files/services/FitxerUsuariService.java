@@ -86,6 +86,14 @@ public class FitxerUsuariService {
        return listFU.get();
     }
 
+    public Collection<FitxerUsuari> getListFitxerUsuariByUsuariPropietari(String username){
+        User user = userService.getUserByUserName(username);
+        Optional<Collection<FitxerUsuari>> listFU = fitxerUsuariRepository.findByUserIdAndEsPropietari(user.getId(),true);
+        if (listFU.isEmpty())
+            throw new RuntimeException("Aquest usuari no te cap fitxer");
+        return listFU.get();
+    }
+
 
     public Collection<FitxerUsuari> getListFitxerUsuariByFitxer(String fitxerId){
         Optional<Collection<FitxerUsuari>> listFU = fitxerUsuariRepository.findByfitxerId(fitxerId);
@@ -94,7 +102,14 @@ public class FitxerUsuariService {
         return listFU.get();
     }
 
-    public Collection<Fitxer> getListFitxerBDByUsuari(String username) throws IOException {
+    public Collection<FitxerUsuari> getListFitxerUsuariByEsPropietari(Boolean esPropietari){
+        Optional<Collection<FitxerUsuari>> listFU = fitxerUsuariRepository.findByesPropietari(esPropietari);
+        if (listFU.isEmpty())
+            throw new RuntimeException("No hi ha cap relacio segons el parametre de propietat indicat");
+        return listFU.get();
+    }
+
+    public Collection<Fitxer> getListFitxerByUsuari(String username) {
 
         Collection<Fitxer> toReturn = new ArrayList<>();
         Collection<FitxerUsuari> fus = this.getListFitxerUsuariByUsuari(username);
@@ -104,7 +119,7 @@ public class FitxerUsuariService {
         return toReturn;
     }
 
-    public Collection<Fitxer> getListFitxerBDCompartitsByUsuari(String username) throws IOException {
+    public Collection<Fitxer> getListFitxerCompartitsByUsuari(String username) {
 
         Collection<Fitxer> toReturn = new ArrayList<>();
         Collection<FitxerUsuari> fus = this.getListFitxerUsuariByUsuari(username);
@@ -112,6 +127,24 @@ public class FitxerUsuariService {
             if (!fu.getEsPropietari())
                 toReturn.add(fitxerService.getFitxer(fu.getFitxerId()));
         }
+        return toReturn;
+    }
+
+    public Collection<Fitxer> getListFitxerCompartitsToUsers(String username){
+        Collection<Fitxer> toReturn = new ArrayList<>();
+        Collection<FitxerUsuari> fitxersUser = this.getListFitxerUsuariByUsuariPropietari(username);
+        Collection<FitxerUsuari> fitxerCompartits = this.getListFitxerUsuariByEsPropietari(false);
+        for (FitxerUsuari fUser : fitxersUser){
+            for (FitxerUsuari fCompartit : fitxerCompartits){
+                if (fUser.getFitxerId().equals(fCompartit.getFitxerId())){
+                    Fitxer fitxer = fitxerService.getFitxer(fCompartit.getFitxerId());
+                    if(!toReturn.contains(fitxer)){
+                        toReturn.add(fitxer);
+                    }
+                }
+            }
+        }
+
         return toReturn;
     }
 

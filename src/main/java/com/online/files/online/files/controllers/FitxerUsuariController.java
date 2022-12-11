@@ -48,19 +48,24 @@ public class FitxerUsuariController {
     public Collection<FitxerUsuari> getFitxersUsuaris(){ return fitxerUsuariService.getFitxersUsuaris();}
 
     @GetMapping("/{username}")
-    public ResponseEntity<Collection<Fitxer>> getFitxersUsuarisByUsuari(@PathVariable("username") String username) throws IOException {
-        return new ResponseEntity<>(fitxerUsuariService.getListFitxerBDByUsuari(username), HttpStatus.OK);
+    public ResponseEntity<Collection<Fitxer>> getFitxersUsuarisByUsuari(@PathVariable("username") String username) {
+        return new ResponseEntity<>(fitxerUsuariService.getListFitxerByUsuari(username), HttpStatus.OK);
     }
 
     @GetMapping("/{username}/compartits")
-    public ResponseEntity<Collection<Fitxer>> getFitxersCompartits(@PathVariable("username") String username) throws IOException {
+    public ResponseEntity<Collection<Fitxer>> getFitxersCompartits(@PathVariable("username") String username) {
 
-        return new ResponseEntity<>(fitxerUsuariService.getListFitxerBDCompartitsByUsuari(username),HttpStatus.OK);
+        return new ResponseEntity<>(fitxerUsuariService.getListFitxerCompartitsByUsuari(username),HttpStatus.OK);
     }
 
     @GetMapping("/fitxer")
     public Collection<FitxerUsuari> getFitxersUsuarisByFitxer(@RequestParam("fitxerID") String fitxerID){
         return fitxerUsuariService.getListFitxerUsuariByFitxer(fitxerID);
+    }
+
+    @GetMapping("{username}/fitxersto")
+    public ResponseEntity<Collection<Fitxer>> getFitxersCompartitstoUsers(@PathVariable("username") String username){
+        return new ResponseEntity<>(fitxerUsuariService.getListFitxerCompartitsToUsers(username),HttpStatus.OK);
     }
 
     @GetMapping("/{id}/users")
