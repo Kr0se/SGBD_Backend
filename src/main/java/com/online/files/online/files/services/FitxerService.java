@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -98,7 +100,7 @@ public class FitxerService
         fitxerRepository.delete(f);
     }
 
-    public Collection<Fitxer> getFitxerByTipus(Collection<FitxerUsuari> fus, String tipus) throws IOException {
+    public Collection<Fitxer> getFitxerByTipus(Collection<FitxerUsuari> fus, String tipus) {
         Collection<Fitxer> fitxers = new ArrayList<>();
         for(FitxerUsuari fu : fus){
             Fitxer f = this.getFitxer(fu.getFitxerId());
@@ -108,47 +110,52 @@ public class FitxerService
         return fitxers;
     }
 
-    public Collection<Fitxer> getFitxerByDataPujada(Collection<FitxerUsuari> fus, Date data) throws IOException {
+    private Date parser(String dataS) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return format.parse(dataS);
+    }
+
+    public Collection<Fitxer> getFitxerByDataPujada(Collection<FitxerUsuari> fus, String data) throws ParseException {
         Collection<Fitxer> fitxers = new ArrayList<>();
         for(FitxerUsuari fu : fus){
             Fitxer f = this.getFitxer(fu.getFitxerId());
-            if(f.getDataPujada().equals(data))
+            if(f.getDataPujada().equals(this.parser(data)))
                 fitxers.add(f);
         }
         return fitxers;
     }
 
-    public Collection<Fitxer> getFitxerByDataPujadaBetween(Collection<FitxerUsuari> fus, Date data1, Date data2) throws IOException {
+    public Collection<Fitxer> getFitxerByDataPujadaBetween(Collection<FitxerUsuari> fus, String data1, String data2) throws ParseException {
         Collection<Fitxer> fitxers = new ArrayList<>();
         for(FitxerUsuari fu : fus){
             Fitxer f = this.getFitxer(fu.getFitxerId());
-            if(f.getDataPujada().after(data1) && f.getDataPujada().before(data2))
+            if(f.getDataPujada().after(this.parser(data1)) && f.getDataPujada().before(this.parser(data2)))
                 fitxers.add(f);
         }
         return fitxers;
     }
 
-    public Collection<Fitxer> getFitxerByDataPujadaAfter(Collection<FitxerUsuari> fus, Date data) throws IOException {
+    public Collection<Fitxer> getFitxerByDataPujadaAfter(Collection<FitxerUsuari> fus, String data) throws ParseException {
         Collection<Fitxer> fitxers = new ArrayList<>();
         for(FitxerUsuari fu : fus){
             Fitxer f = this.getFitxer(fu.getFitxerId());
-            if(f.getDataPujada().after(data))
+            if(f.getDataPujada().after(this.parser(data)))
                 fitxers.add(f);
         }
         return fitxers;
     }
 
-    public Collection<Fitxer> getFitxerByDataPujadaBefore(Collection<FitxerUsuari> fus, Date data) throws IOException {
+    public Collection<Fitxer> getFitxerByDataPujadaBefore(Collection<FitxerUsuari> fus, String data) throws ParseException {
         Collection<Fitxer> fitxers = new ArrayList<>();
         for(FitxerUsuari fu : fus){
             Fitxer f = this.getFitxer(fu.getFitxerId());
-            if(f.getDataPujada().before(data))
+            if(f.getDataPujada().before(this.parser(data)))
                 fitxers.add(f);
         }
         return fitxers;
     }
 
-    public Collection<Fitxer> getFitxerByNomStartsWith(Collection<FitxerUsuari> fus, String nom) throws IOException {
+    public Collection<Fitxer> getFitxerByNomStartsWith(Collection<FitxerUsuari> fus, String nom) {
         Collection<Fitxer> fitxers = new ArrayList<>();
         for(FitxerUsuari fu : fus){
             Fitxer f = this.getFitxer(fu.getFitxerId());
@@ -158,7 +165,7 @@ public class FitxerService
         return fitxers;
     }
 
-    public Collection<Fitxer> getFitxerByNomEndsWith(Collection<FitxerUsuari> fus, String nom) throws IOException {
+    public Collection<Fitxer> getFitxerByNomEndsWith(Collection<FitxerUsuari> fus, String nom) {
         Collection<Fitxer> fitxers = new ArrayList<>();
         for(FitxerUsuari fu : fus){
             Fitxer f = this.getFitxer(fu.getFitxerId());

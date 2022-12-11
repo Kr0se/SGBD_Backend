@@ -1,6 +1,7 @@
 package com.online.files.online.files.controllers;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -141,42 +142,65 @@ public class FitxerController
     }
 
     @GetMapping("/{username}/tipus")
-    public ResponseEntity<Collection<Fitxer>> getFitxerByTipus(@PathVariable("username") String username, @RequestParam("tipus") String tipus) throws IOException {
+    public ResponseEntity<Collection<Fitxer>> getFitxerByTipus(@PathVariable("username") String username, @RequestParam("tipus") String tipus) {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
         return new ResponseEntity<>(fitxerService.getFitxerByTipus(fus,tipus),HttpStatus.OK);
     }
 
-    /*@GetMapping("/{username}/data")
-    public ResponseEntity<Collection<Fitxer>> getFitxerByData(@PathVariable("username") String username,@RequestParam FitxerDTO fitxer) throws IOException {
+    /**
+     * @param username usuari de la base de dades (clau primaria de user)
+     * @param data data en format (dd/MM/yyyy) de la qual volem obtenir els fitxers de l'usuari
+     * @return Cerca de fitxers en la data entrada
+     */
+    @GetMapping("/{username}/data")
+    public ResponseEntity<Collection<Fitxer>> getFitxerByData(@PathVariable("username") String username,@RequestParam("data") String data) throws ParseException {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
-        return new ResponseEntity<>(fitxerService.getFitxerByDataPujada(fus,fitxer.getDataPujada()),HttpStatus.OK);
+        return new ResponseEntity<>(fitxerService.getFitxerByDataPujada(fus,data),HttpStatus.OK);
     }
 
+    /**
+     * @param username usuari de la base de dades (clau primaria de user)
+     * @param data1 data posterior en format (dd/MM/yyyy) de la qual volem obtenir els fitxers de l'usuari
+     * @param data2 data anterior en format (dd/MM/yyyy) de la qual volem obtenir els fitxers de l'usuari
+     * @return Cerca de fitxers entre les dates entrades
+     */
     @GetMapping("/{username}/databetween")
-    public ResponseEntity<Collection<Fitxer>> getFitxerBetweenData(@PathVariable("username") String username, @RequestBody FitxerDTO fitxer) throws IOException {
+    public ResponseEntity<Collection<Fitxer>> getFitxerBetweenData(@PathVariable("username") String username,
+                                                                   @RequestParam("data1") String data1,
+                                                                   @RequestParam("data2") String data2) throws ParseException {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
-        return new ResponseEntity<>(fitxerService.getFitxerByDataPujadaBetween(fus,fitxer.getDataPujada(),fitxer.getDataCerca2()),HttpStatus.OK);
+        return new ResponseEntity<>(fitxerService.getFitxerByDataPujadaBetween(fus,data1,data2),HttpStatus.OK);
     }
 
+    /**
+     * @param username usuari de la base de dades (clau primaria de user)
+     * @param data data anterior en format (dd/MM/yyyy) de la qual volem obtenir els fitxers de l'usuari
+     * @return Cerca de fitxers entre les dates entrades
+     */
     @GetMapping("/{username}/afterdata")
-    public ResponseEntity<Collection<Fitxer>> getFitxerByDataAfter(@PathVariable("username") String username,@RequestBody FitxerDTO fitxer) throws IOException {
+    public ResponseEntity<Collection<Fitxer>> getFitxerByDataAfter(@PathVariable("username") String username,@RequestParam("data") String data) throws ParseException {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
-        return new ResponseEntity<>(fitxerService.getFitxerByDataPujadaAfter(fus,fitxer.getDataPujada()),HttpStatus.OK);
+        return new ResponseEntity<>(fitxerService.getFitxerByDataPujadaAfter(fus,data),HttpStatus.OK);
     }
 
+    /**
+     * @param username usuari de la base de dades (clau primaria de user)
+     * @param data data posterior en format (dd/MM/yyyy) de la qual volem obtenir els fitxers de l'usuari
+     * @return Cerca de fitxers entre les dates entrades
+     */
     @GetMapping("/{username}/beforedata")
-    public ResponseEntity<Collection<Fitxer>> getFitxerByDataBefore(@PathVariable("username") String username,@RequestBody FitxerDTO fitxer) throws IOException {
+    public ResponseEntity<Collection<Fitxer>> getFitxerByDataBefore(@PathVariable("username") String username,@RequestParam("data") String data) throws ParseException {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
-        return new ResponseEntity<>(fitxerService.getFitxerByDataPujadaBefore(fus,fitxer.getDataPujada()),HttpStatus.OK);
-    }*/
+        return new ResponseEntity<>(fitxerService.getFitxerByDataPujadaBefore(fus,data),HttpStatus.OK);
+    }
 
     @GetMapping("/{username}/nomstarts")
-    public ResponseEntity<Collection<Fitxer>> getFitxerByNomStarts(@PathVariable("username") String username,@RequestParam("nom") String nom) throws IOException {
+    public ResponseEntity<Collection<Fitxer>> getFitxerByNomStarts(@PathVariable("username") String username,@RequestParam("nom") String nom) {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
         return new ResponseEntity<>(fitxerService.getFitxerByNomStartsWith(fus,nom),HttpStatus.OK);
     }
     @GetMapping("/{username}/nomends")
-    public ResponseEntity<Collection<Fitxer>> getFitxerByNomEnds(@PathVariable("username") String username,@RequestParam("nom") String nom) throws IOException {
+    public ResponseEntity<Collection<Fitxer>> getFitxerByNomEnds(@PathVariable("username") String username,@RequestParam("nom") String nom) {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
         return new ResponseEntity<>(fitxerService.getFitxerByNomEndsWith(fus,nom),HttpStatus.OK);
     }
