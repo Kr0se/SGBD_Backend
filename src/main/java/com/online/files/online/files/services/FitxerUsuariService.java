@@ -48,6 +48,10 @@ public class FitxerUsuariService {
         User user = userService.getUserByUserName(relacio.getUsername());
         Fitxer fitxer = fitxerService.getFitxer(relacio.getFitxerId());
 
+        if(existeixRelacio(relacio.getFitxerId(), user.getId())){
+            return new FitxerUsuari();
+        }
+
         FitxerUsuari fu = new FitxerUsuari(relacio.getFitxerId(), user.getId(), false);
         fitxerUsuariRepository.save(fu);
 
@@ -55,6 +59,14 @@ public class FitxerUsuariService {
         userService.addFitxerUser(user, fu);
 
         return fu;
+    }
+
+    public Boolean existeixRelacio(String fitxerId, String userId){
+        Optional<FitxerUsuari> fu = fitxerUsuariRepository.findByFitxerIdAndUserId(fitxerId,userId);
+        if (fu.isEmpty()) {
+            return false;
+        }
+        return true;
     }
 
     public void deleteFitxerUsuariCompartit(RelacioDTO relacio) {
