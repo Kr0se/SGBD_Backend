@@ -170,6 +170,14 @@ public class FitxerUsuariService {
         return toReturn;
     }
 
+    public User getUserPropietari(String fitxerId){
+        Optional<FitxerUsuari> fu = fitxerUsuariRepository.findByFitxerIdAndEsPropietari(fitxerId,true);
+        if(fu.isEmpty()){
+            throw new RuntimeException("Aquesta relacio no existeix, aquest usuari no te cap propietari!");
+        }
+        return userService.getUser(fu.get().getUserId());
+    }
+
     public User deleteFitxerUsuariOfUser(Collection<FitxerUsuari> fus){
 
         User user = new User();

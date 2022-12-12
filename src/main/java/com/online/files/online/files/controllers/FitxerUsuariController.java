@@ -72,4 +72,9 @@ public class FitxerUsuariController {
     public ResponseEntity<Collection<User>> getListUsersCompartits(@PathVariable ("id") String fitxerId){
         return new ResponseEntity<>(fitxerUsuariService.getListUsersCompartits(fitxerId),HttpStatus.OK);
     }
+
+    @GetMapping("/{id}/propietari")
+    public ResponseEntity<User> getUserPropietari(@PathVariable("id") String fitxerID){
+        return new ResponseEntity<>(fitxerUsuariService.getUserPropietari(fitxerID),HttpStatus.OK);
+    }
 }
