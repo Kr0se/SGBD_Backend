@@ -78,4 +78,11 @@ public class Fitxer
     public String toString(){
         return "Fitxer [id= " + id + ", nom= " + nom + ", Fitxer= " + fitxerBDId + "]";
     }
+
+    @Override
+    public boolean equals(Object o){
+        if (!(o instanceof Fitxer))
+            return false;
+        return this.id.equals(((Fitxer) o).id);
+    }
 }
