@@ -27,8 +27,17 @@ public class FitxerUsuariService {
     @Autowired
     private FitxerService fitxerService;
 
+    /**
+     * @return Llista de totes les relacions existents en base de dades
+     */
     public Collection<FitxerUsuari> getFitxersUsuaris(){ return fitxerUsuariRepository.findAll();}
 
+    /**
+     * @param f és el id del fitxer
+     * @param u és el username del usuari
+     * @param esPropietari parametre que indica si el usuari es propietari del fitxer o es compartit
+     * @return Relacio de Fitxer Usuari creada a partir del fitxer f i del usuari u
+     */
     public FitxerUsuari createFitxerUsuari(String f, String u, Boolean esPropietari){
 
         User user = userService.getUserByUserName(u);
@@ -43,6 +52,10 @@ public class FitxerUsuariService {
         return fu;
     }
 
+    /**
+     * @param relacio amb el id del fitxer i el username del usuari
+     * @return Relacio de Fitxer Usuari creada a partir del fitxer i del usuari
+     */
     public FitxerUsuari createFitxerUsuariCompartit(RelacioDTO relacio){
 
         User user = userService.getUserByUserName(relacio.getUsername());
@@ -61,6 +74,11 @@ public class FitxerUsuariService {
         return fu;
     }
 
+    /**
+     * @param fitxerId és el id del fitxer
+     * @param userId és el username del usuari
+     * @return cert si existeix la relacio entre el fitxer i l'usuari o falts altrement
+     */
     public Boolean existeixRelacio(String fitxerId, String userId){
         Optional<FitxerUsuari> fu = fitxerUsuariRepository.findByFitxerIdAndUserId(fitxerId,userId);
         if (fu.isEmpty()) {
@@ -69,6 +87,10 @@ public class FitxerUsuariService {
         return true;
     }
 
+    /**
+     * @param relacio amb el id del fitxer i el username del usuari
+     * @return Relacio de Fitxer Usuari borrada entre del fitxer i del usuari
+     */
     public void deleteFitxerUsuariCompartit(RelacioDTO relacio) {
         User user = userService.getUserByUserName(relacio.getUsername());
         Fitxer fitxer = fitxerService.getFitxer(relacio.getFitxerId());
@@ -81,6 +103,11 @@ public class FitxerUsuariService {
         fitxerUsuariRepository.delete(fu.get());
     }
 
+    /**
+     * @param fitxerId és el id del fitxer
+     * @param userId és el username del usuari
+     * @return cert l'usuari es el propietari del fitxer i  o falts altrement
+     */
     public Boolean esPropietari(String fitxerId, String userId){
 
         Optional<FitxerUsuari> fu = fitxerUsuariRepository.findByFitxerIdAndUserId(fitxerId,userId);
@@ -90,6 +117,11 @@ public class FitxerUsuariService {
         return fu.get().getEsPropietari();
     }
 
+    /**
+     *
+     * @param username usuari de la base de dades (clau primaria de user)
+     * @return Llista de relacions de l'usuari amb fitxers
+     */
     public Collection<FitxerUsuari> getListFitxerUsuariByUsuari(String username){
         User user = userService.getUserByUserName(username);
         Optional<Collection<FitxerUsuari>> listFU = fitxerUsuariRepository.findByuserId(user.getId());
@@ -98,6 +130,11 @@ public class FitxerUsuariService {
        return listFU.get();
     }
 
+    /**
+     *
+     * @param username usuari de la base de dades (clau primaria de user)
+     * @return Llista de relacions de l'usuari amb fitxers que sigui el propietari
+     */
     public Collection<FitxerUsuari> getListFitxerUsuariByUsuariPropietari(String username){
         User user = userService.getUserByUserName(username);
         Optional<Collection<FitxerUsuari>> listFU = fitxerUsuariRepository.findByUserIdAndEsPropietari(user.getId(),true);
@@ -107,6 +144,11 @@ public class FitxerUsuariService {
     }
 
 
+    /**
+     *
+     * @param fitxerId del fitxer
+     * @return Llista de relacions del fitxer amb usuaris
+     */
     public Collection<FitxerUsuari> getListFitxerUsuariByFitxer(String fitxerId){
         Optional<Collection<FitxerUsuari>> listFU = fitxerUsuariRepository.findByfitxerId(fitxerId);
         if (listFU.isEmpty())
@@ -114,6 +156,11 @@ public class FitxerUsuariService {
         return listFU.get();
     }
 
+    /**
+     *
+     * @param esPropietari si la relacio es compartida o no
+     * @return Llista de relacions de fitxer usuari segons el parametre
+     */
     public Collection<FitxerUsuari> getListFitxerUsuariByEsPropietari(Boolean esPropietari){
         Optional<Collection<FitxerUsuari>> listFU = fitxerUsuariRepository.findByesPropietari(esPropietari);
         if (listFU.isEmpty())
@@ -121,6 +168,11 @@ public class FitxerUsuariService {
         return listFU.get();
     }
 
+    /**
+     *
+     * @param username usuari de la base de dades (clau primaria de user)
+     * @return Llista de fitxers de l'usuari
+     */
     public Collection<Fitxer> getListFitxerByUsuari(String username) {
 
         Collection<Fitxer> toReturn = new ArrayList<>();
@@ -131,6 +183,11 @@ public class FitxerUsuariService {
         return toReturn;
     }
 
+    /**
+     *
+     * @param username usuari de la base de dades (clau primaria de user)
+     * @return Llista de fitxers del usuari que  altres usuaris li han compartit
+     */
     public Collection<Fitxer> getListFitxerCompartitsByUsuari(String username) {
 
         Collection<Fitxer> toReturn = new ArrayList<>();
@@ -142,6 +199,11 @@ public class FitxerUsuariService {
         return toReturn;
     }
 
+    /**
+     *
+     * @param username usuari de la base de dades (clau primaria de user)
+     * @return Llista de fitxers del usuari que li ha compartit amb altres usuaris
+     */
     public Collection<Fitxer> getListFitxerCompartitsToUsers(String username){
         Collection<Fitxer> toReturn = new ArrayList<>();
         Collection<FitxerUsuari> fitxersUser = this.getListFitxerUsuariByUsuariPropietari(username);
@@ -160,6 +222,10 @@ public class FitxerUsuariService {
         return toReturn;
     }
 
+    /**
+     * @param fitxerId del fitxer
+     * @return Llista de usuaris amb els que s'ha compartit el fitxer
+     */
     public Collection<User> getListUsersCompartits(String fitxerId){
         Collection<User> toReturn = new ArrayList<>();
         Collection<FitxerUsuari> fus = this.getListFitxerUsuariByFitxer(fitxerId);
@@ -170,6 +236,10 @@ public class FitxerUsuariService {
         return toReturn;
     }
 
+    /**
+     * @param fitxerId del fitxer
+     * @return Usuari propietari del fitxer
+     */
     public User getUserPropietari(String fitxerId){
         Optional<FitxerUsuari> fu = fitxerUsuariRepository.findByFitxerIdAndEsPropietari(fitxerId,true);
         if(fu.isEmpty()){
@@ -178,6 +248,10 @@ public class FitxerUsuariService {
         return userService.getUser(fu.get().getUserId());
     }
 
+    /**
+     * @param fus llista de relacions de fitxer usuari
+     * @return L'usuari amb l'estructura actualitzada amb les relacions esborrades
+     */
     public User deleteFitxerUsuariOfUser(Collection<FitxerUsuari> fus){
 
         User user = new User();

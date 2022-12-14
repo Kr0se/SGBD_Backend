@@ -60,6 +60,12 @@ public class FitxerController
     @GetMapping()
     public Collection<Fitxer> getFitxers(){ return fitxerService.getFitxers();}
 
+    /**
+     * @param username usuari de la base de dades (clau primaria de user)
+     * @path on volem penjar el fitxer
+     * @param file amb el nou fitxer
+     * @return L'usuari amb l'estructura actualitzada amb el fitxer penjat
+     */
     @PostMapping(path = "/{username}/upload")
     public ResponseEntity <User> pujarFitxer(@PathVariable("username") String username,
             @RequestParam("path") String path,
@@ -75,11 +81,10 @@ public class FitxerController
         return new ResponseEntity<> (userService.getUserByUserName(username), HttpStatus.OK);
     }
 
-    /*@GetMapping("/get/{id}")
-    public ResponseEntity<FitxerBD> getFitxer(@PathVariable("id") String id) throws IOException {
-        return new ResponseEntity<>(fitxerService.getFitxerBD(id),HttpStatus.OK);
-    }*/
-
+    /**
+     * @param id del fitxer que volem descarregar
+     * @return El fitxer descarregat de la base de dades
+     */
     @GetMapping("/get/{id}")
     public ResponseEntity<ByteArrayResource> download(@PathVariable("id") String id) throws IOException {
         FitxerBD fitxerBD = fitxerService.getFitxerBD(id);
@@ -90,6 +95,11 @@ public class FitxerController
                 .body(new ByteArrayResource(IOUtils.toByteArray(fitxerBD.getStream())));
     }
 
+    /**
+     * @param id del fitxer que volem esborrar
+     * @param file amb el path del fitxer
+     * @return L'usuari amb l'estructura actualitzada amb el fitxer esborrat
+     */
     @PostMapping("/delete/{id}")
     public ResponseEntity<User> deleteFitxer(@PathVariable("id") String id, @RequestBody FitxerDTO file){
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByFitxer(id);
@@ -102,6 +112,11 @@ public class FitxerController
         return new ResponseEntity<>(userRepository.findByUsername(user.getUsername()), HttpStatus.OK);
     }
 
+    /**
+     * @param id del fitxer que volem renombrar
+     * @param file amb el nou nom del fitxer
+     * @return L'usuari amb l'estructura actualitzada amb el fitxer renombrat
+     */
     @PostMapping("/rename/{id}")
     public ResponseEntity<User> renameFitxer(@PathVariable("id") String id, @RequestBody FitxerDTO file) throws IOException {
         FileFolderDTO ff = new FileFolderDTO();
@@ -121,6 +136,12 @@ public class FitxerController
         return new ResponseEntity<>(userRepository.findByUsername(user.getUsername()),HttpStatus.OK);
     }
 
+    /**
+     * @param id del fitxer que volem actualitzar
+     * @param path on es troba el fitxer
+     * @param file actualitzat del fitxer
+     * @return L'usuari amb l'estructura actualitzada amb el fitxer actualitzat
+     */
     @PostMapping("/update/{id}")
     public ResponseEntity<User> updateFitxer(@PathVariable("id") String id,
                                              @RequestParam("path") String path, @RequestParam("file") MultipartFile file, Model model ) throws IOException {
@@ -141,6 +162,11 @@ public class FitxerController
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
+    /**
+     * @param username usuari de la base de dades (clau primaria de user)
+     * @param tipus de fitxer pel qual volem obtenir els fitxers de l'usuari
+     * @return Llista de fitxers pel tipus de fitxer entrat
+     */
     @GetMapping("/{username}/tipus")
     public ResponseEntity<Collection<Fitxer>> getFitxerByTipus(@PathVariable("username") String username, @RequestParam("tipus") String tipus) {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
@@ -150,7 +176,7 @@ public class FitxerController
     /**
      * @param username usuari de la base de dades (clau primaria de user)
      * @param data data en format (dd/MM/yyyy) de la qual volem obtenir els fitxers de l'usuari
-     * @return Cerca de fitxers en la data entrada
+     * @return Llista de fitxers en la data entrada
      */
     @GetMapping("/{username}/data")
     public ResponseEntity<Collection<Fitxer>> getFitxerByData(@PathVariable("username") String username,@RequestParam("data") String data) throws ParseException {
@@ -162,7 +188,7 @@ public class FitxerController
      * @param username usuari de la base de dades (clau primaria de user)
      * @param data1 data posterior en format (dd/MM/yyyy) de la qual volem obtenir els fitxers de l'usuari
      * @param data2 data anterior en format (dd/MM/yyyy) de la qual volem obtenir els fitxers de l'usuari
-     * @return Cerca de fitxers entre les dates entrades
+     * @return Llista de fitxers entre les dates entrades
      */
     @GetMapping("/{username}/databetween")
     public ResponseEntity<Collection<Fitxer>> getFitxerBetweenData(@PathVariable("username") String username,
@@ -175,7 +201,7 @@ public class FitxerController
     /**
      * @param username usuari de la base de dades (clau primaria de user)
      * @param data data anterior en format (dd/MM/yyyy) de la qual volem obtenir els fitxers de l'usuari
-     * @return Cerca de fitxers entre les dates entrades
+     * @return Llista de fitxers entre les dates entrades
      */
     @GetMapping("/{username}/afterdata")
     public ResponseEntity<Collection<Fitxer>> getFitxerByDataAfter(@PathVariable("username") String username,@RequestParam("data") String data) throws ParseException {
@@ -186,7 +212,7 @@ public class FitxerController
     /**
      * @param username usuari de la base de dades (clau primaria de user)
      * @param data data posterior en format (dd/MM/yyyy) de la qual volem obtenir els fitxers de l'usuari
-     * @return Cerca de fitxers entre les dates entrades
+     * @return Llista de fitxers entre les dates entrades
      */
     @GetMapping("/{username}/beforedata")
     public ResponseEntity<Collection<Fitxer>> getFitxerByDataBefore(@PathVariable("username") String username,@RequestParam("data") String data) throws ParseException {
@@ -194,11 +220,22 @@ public class FitxerController
         return new ResponseEntity<>(fitxerService.getFitxerByDataPujadaBefore(fus,data),HttpStatus.OK);
     }
 
+    /**
+     * @param username usuari de la base de dades (clau primaria de user)
+     * @param nom d'inici pel qual volem obtenir els fitxers de l'usuari
+     * @return Llista de fitxers pel nom inicial entrat
+     */
     @GetMapping("/{username}/nomstarts")
     public ResponseEntity<Collection<Fitxer>> getFitxerByNomStarts(@PathVariable("username") String username,@RequestParam("nom") String nom) {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);
         return new ResponseEntity<>(fitxerService.getFitxerByNomStartsWith(fus,nom),HttpStatus.OK);
     }
+
+    /**
+     * @param username usuari de la base de dades (clau primaria de user)
+     * @param nom final pel qual volem obtenir els fitxers de l'usuari
+     * @return Llista de fitxers pel nom final entrat
+     */
     @GetMapping("/{username}/nomends")
     public ResponseEntity<Collection<Fitxer>> getFitxerByNomEnds(@PathVariable("username") String username,@RequestParam("nom") String nom) {
         Collection<FitxerUsuari> fus = fitxerUsuariService.getListFitxerUsuariByUsuari(username);

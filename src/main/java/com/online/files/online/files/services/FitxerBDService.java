@@ -30,12 +30,25 @@ public class FitxerBDService {
     @Autowired
     private GridFsOperations operations;
 
+    /**
+     *
+     * @param file
+     * @return id del fitxer creat en base de dades
+     * @throws IOException
+     */
     public String createFitxerBD(MultipartFile file) throws IOException {
         ObjectId id = gridFsTemplate.store(
                 file.getInputStream(), file.getOriginalFilename(), file.getContentType());
         return id.toString();
     }
 
+    /**
+     *
+     * @param id del fitxer
+     * @return fitxerBD de la base de dades
+     * @throws IllegalStateException
+     * @throws IOException
+     */
     public FitxerBD getFitxerBD(String id) throws IllegalStateException, IOException {
         GridFSFile file = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
         FitxerBD fitxerBD = new FitxerBD();
@@ -45,6 +58,13 @@ public class FitxerBDService {
         return fitxerBD;
     }
 
+    /**
+     *
+     * @param id del fitxer
+     * @param nouNom del fitxer
+     * @return fitxer amb el nom actualitzat
+     * @throws IOException
+     */
     public String renameFitxerBD(String id, String nouNom) throws IOException {
         FitxerBD fitxerBD = this.getFitxerBD(id);
         ObjectId idNou = gridFsTemplate.store(
@@ -53,6 +73,12 @@ public class FitxerBDService {
         return idNou.toString();
     }
 
+    /**
+     *
+     * @return tots els fitxerBD en bases de dades
+     * @throws IllegalStateException
+     * @throws IOException
+     */
     public Collection<FitxerBD> getFitxersBD() throws IllegalStateException, IOException{
         GridFSFindIterable files = gridFsTemplate.find(new Query());
         Collection<FitxerBD> fitxerBDS = new ArrayList<>();
@@ -66,6 +92,13 @@ public class FitxerBDService {
         return fitxerBDS;
     }
 
+    /**
+     *
+     * @param id del fitxer
+     * @return la data de pujdda del fitxer
+     * @throws IllegalStateException
+     * @throws IOException
+     */
     public Date getUploadDate(String id)throws IllegalStateException, IOException {
         GridFSFile file = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
         /*DateFormat df = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
@@ -74,6 +107,10 @@ public class FitxerBDService {
         return file.getUploadDate();
     }
 
+    /**
+     *
+     * @param id del fitxer que volem borrar
+     */
     public void deleteFitxerBD(String id){
         gridFsTemplate.delete(new Query(Criteria.where("_id").is(id)));
     }
